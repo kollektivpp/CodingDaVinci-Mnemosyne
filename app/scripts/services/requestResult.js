@@ -26,10 +26,12 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
             case "PERSON":
                 return this.nextSearchTermForPerson();
                 break;
-
+            case "FACET" :
+                return this.nextSearchTermForFacet();
+                break;
             default:
                 "TYPE COULD NOT BE RESOLVED";
-                return "Baumeister";
+                return "UNDEFINED";
         }
         // TODO: Something like that:
         // this.outcome.title
@@ -93,6 +95,17 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
 
         return nextSearchTerm;
     };
+
+    RequestResult.prototype.nextSearchTermForFacet = function () {
+        var facetarray = [];
+        this.outcome.facets.forEach(function (elem) {
+
+            elem.facetValues.forEach(function (innerElem) {
+                facetarray.push(innerElem.value);
+            });
+        });
+        return facetarray[Math.floor(Math.random() * facetarray.length)];
+    }
 
     return RequestResult;
 });
