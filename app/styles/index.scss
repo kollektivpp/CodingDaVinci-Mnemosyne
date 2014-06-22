@@ -22,3 +22,31 @@
        -moz-appearance: none;
             appearance: none;
 }
+
+@mixin disableUserSelect {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+}
+
+// Elements
+textarea {
+    @include appearanceReset;
+    resize: none;
+}
+
+::-webkit-input-placeholder {
+   color: $colorBlack;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: $colorBlack;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $colorBlack;  
+}
+
+:-ms-input-placeholder {  
+   color: $colorBlack;  
+}

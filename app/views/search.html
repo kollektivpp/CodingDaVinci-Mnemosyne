@@ -6,7 +6,8 @@
         <input ng-model="searchTerm" type="text" name="search-term" value="" placeholder="Search term">
         <input ng-click="triggerSearch()" type="submit" name="submit-search" value="Search">
     </form>
-    <textarea ng-model="searchResult" name="result-area" rows="50" cols="160" placeholder="The result will be shown here">
+    <textarea ng-model="searchResult" name="result-area" rows="5" cols="160" placeholder="The result will be shown here">
         {{searchResult}}
-    </textarea>    
+    </textarea>
+    <div ng-include="'views/partials/control-panel.html'"></div>  
 </section>

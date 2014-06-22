@@ -1,0 +1,173 @@
+.control-panel-wrapper {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    font-family: "FiraMono";
+    font-size: 13px;
+
+    @include flexbox();
+    @include flex-direction(row);
+    @include align-content(center);
+    @include justify-content(center);
+
+    & > div {
+        position: relative;
+        margin: 0 10px 0 10px;
+
+        .standard-overlay {
+            position: absolute;
+            bottom: 76px;
+            width: 350px;
+            
+            &.overlay-left {
+                left: 0px;
+            }
+
+            &.overlay-right {
+                right: 0px;
+            }
+        }
+
+        .overlay-element {
+            background-color: $colorMain;
+            border: $colorBlack solid $widthBorder;  
+            margin-top: 6px;
+            padding: 8px;
+            color: $colorBlack;
+            max-height: 300px;
+            overflow: scroll;
+
+            &.overlay-search-selector {
+                width: 50%;
+                height: 100px;
+                text-align: center;
+
+                input {
+                    text-align: center;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                div {
+                    @include disableUserSelect;
+                    cursor: default;
+                    margin-top: 40px;
+                }
+            }
+        }
+
+        .overlay-group-column {
+            @include flexbox;
+            @include flex-direction(column);
+
+            .overlay-element {
+                margin-top: 6px;
+            }
+        }
+
+        .overlay-group-row {
+            @include flexbox;
+            @include flex-direction(row);
+
+            .overlay-element {
+                margin-left: 6px;
+            }
+        }
+    }
+
+    button {
+        @include appearanceReset();
+        font-family: "FiraMono";
+        width: 100px;
+        height: 70px;
+
+        &.standard-button {
+            z-index: 1;
+            background-color: $colorMain;
+            color: $colorBlack;
+            border: $widthBorder solid $colorBlack;
+
+            &:active,
+            &.active {
+                background-color: $colorBlack;
+                border-color: $colorMain;
+                color: $colorWhite;
+            }
+
+            &.label-left {
+                padding-left: 20px;
+                text-align: left;
+            }
+
+            &.label-right {
+                padding-right: 20px;
+                text-align: right;
+            }
+        }
+
+        &.alternative-button {
+            background-color: $colorBlack;
+            color: $colorMain;
+            border: $widthBorder solid $colorMain;
+
+            &:active,
+            &.active {
+                background-color: $colorMain;
+                border-color: $colorBlack;
+                color: $colorBlack;
+            }
+        }
+    }
+
+    input {
+        @include appearanceReset;
+        background-color: $colorMain;
+        color: $colorBlack;
+        font-family: "FiraMono";
+        font-size: 13px;
+    }
+
+    textarea {
+        background-color: $colorMain;
+        width: 98%;
+        font-family: "FiraMono";
+        font-size: 13px;
+        line-height: 13px;
+        height: 150px;
+    }
+
+    .circle {
+        position: absolute;
+        bottom: -16px;
+        left: 55px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: $colorBlack;
+    }
+
+    .control-depth-wrapper {
+
+        .depth-indicator {
+            @include flexbox;
+            @include flex-direction(row);
+            @include align-content(center);
+            @include justify-content(center);
+            width: 100%;
+            position: absolute;
+            top: -35px;
+
+            .depth-indicator-step {
+                width: 12px;
+                height: 12px;
+                margin: 0 4px 0 4px;
+                background-color: $colorBlack;
+                border: 2px solid $colorBlack;
+
+                &.active {
+                    background-color: $colorMain;
+                }
+            }
+        }
+    }
+}
