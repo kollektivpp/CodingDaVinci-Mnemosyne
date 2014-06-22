@@ -27,21 +27,23 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
             // Facets (Place)
             case 1:
                 console.log("CASE 1");
-
-                if (resultObject.title) {
+                resultObject.type = "FACET";
+                resultObject = this.parseEntityOutcome(resultObject);
+                //if (resultObject.title) {
                     break;
-                }
+                //}
 
             // results[0].docs
             case 2:
                 console.log("CASE 2");
-
+                resultObject.type = "DOC";
                 if (resultObject.title) {
                     break;
                 }
 
             default:
                 console.log("DEAD END");
+                resultObject.type = "UNDEFINED";
                 resultObject.title = "Sackgasse";
         }
 
@@ -68,6 +70,7 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
             resultObject.professionOrOccupation = entityData.professionOrOccupation;
         }
 
+        resultObject.facets = this.responseData.facets
         return resultObject;
     };
 
