@@ -11,15 +11,18 @@ angular.module('mnemosyneApp')
     $scope.requestDepth = 5;
     $scope.searchResult = "Hier erscheinen die Ergebnisse";
     $scope.searchTerm = "search Term";
+    $scope.loadingStopped = true;
 
     $scope.triggerSearch = function() {
         // Starting the Mnemosyne request:
         var request = new MnemosyneRequest($scope.searchTerm, angular.copy($scope.requestDepth), function(result) {
             $scope.fullData = result;
             $scope.parseResult(result);
+            $scope.loadingStopped = true;
         });
 
         request.startSearch();
+        $scope.loadingStopped = false;
     };
 
     //JUST A DUMMY THING FOR NOW:
