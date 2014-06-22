@@ -1,0 +1,24 @@
+// Fonts
+@font-face {
+    font-family: 'FiraMono';
+    src: url('./fonts/FiraMono-Regular.woff') format('woff'),
+         url('./fonts/FiraMono-Regular.ttf') format('truetype'),
+         url('./fontsFiraMono-Regular.eot') format('eot');
+    font-weight: normal;
+    font-style: normal;
+}
+
+// Appearance
+@mixin appearanceReset {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    background-color: transparent;
+    border: none;
+}
+
+@mixin appearanceNone {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
