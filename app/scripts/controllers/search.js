@@ -25,6 +25,24 @@ angular.module('mnemosyneApp')
         $scope.loadingStopped = false;
     };
 
+    $scope.standardButtonClick = function(event) {
+        var clickedButton = angular.element(event.srcElement),
+            overlay = clickedButton.next(),
+            allButtons = angular.element(document.querySelectorAll('.standard-button')),
+            allOverlays = angular.element(document.querySelectorAll('.standard-overlay'));
+
+        if (clickedButton.hasClass('active')) {
+            clickedButton.removeClass('active');
+            overlay.addClass('hidden');
+        } else {
+            allButtons.removeClass('active');
+            allOverlays.addClass('hidden');
+
+            clickedButton.addClass('active');
+            overlay.removeClass('hidden');
+        }
+    };
+
     //JUST A DUMMY THING FOR NOW:
     $scope.parseResult = function(result) {
 

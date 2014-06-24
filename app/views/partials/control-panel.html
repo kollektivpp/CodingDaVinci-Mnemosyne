@@ -1,8 +1,8 @@
 <section class="control-panel">
     <div class="control-panel-wrapper">
         <div id="control-search">
-            <button id="button-search" class="standard-button">RESTART</button>
-            <div id="search-overlay" class="standard-overlay overlay-right overlay-group-row">
+            <button id="button-search" class="standard-button" ng-click="standardButtonClick($event)">RESTART</button>
+            <div id="search-overlay" class="standard-overlay overlay-right overlay-group-row hidden">
                 <div class="overlay-element overlay-search-selector">
                     <div>START RANDOM SEARCH</div>
                 </div>
@@ -34,8 +34,8 @@
         </div>
 
         <div id="control-share">
-            <button id="button-share" class="standard-button">SHARE</button>
-            <div id="share-overlay" class="standard-overlay overlay-left overlay-group-column">
+            <button id="button-share" class="standard-button" ng-click="standardButtonClick($event)">SHARE</button>
+            <div id="share-overlay" class="standard-overlay overlay-left overlay-group-column hidden">
                 <div class="overlay-element">
                     <label>AN: </label>
                     <input type="text">
@@ -53,8 +53,8 @@
         </div>
 
         <div id="control-help">
-            <button id="button-help" class="standard-button">HELP</button>
-            <div id="help-overlay" class="standard-overlay overlay-left overlay-element">
+            <button id="button-help" class="standard-button" ng-click="standardButtonClick($event)">HELP</button>
+            <div id="help-overlay" class="standard-overlay overlay-left overlay-element hidden">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel optio deserunt neque, fugit magnam necessitatibus beatae consequatur corporis, ea accusamus, deleniti temporibus porro culpa unde doloremque, veniam! Maxime mollitia, provident? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, ad eaque id consequuntur nulla fugit a perspiciatis optio aliquid labore eos doloribus illum rem, magnam velit quas numquam expedita voluptate? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem consequuntur, consectetur fugiat labore alias, molestiae quae. Tempore voluptas quidem itaque, velit amet placeat eius possimus repellat eaque nihil! Architecto, neque? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis quisquam, eveniet veritatis laborum cumque, error deleniti officia laboriosam cum ducimus provident quas tenetur molestiae. Molestias voluptate temporibus tenetur tempora sit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos quaerat, nesciunt in non illum eius? Commodi labore possimus voluptatem neque amet illo consequuntur veniam eaque, aut voluptatibus quam deleniti doloribus.
             </div>
         </div>
