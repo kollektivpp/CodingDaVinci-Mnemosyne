@@ -8,14 +8,18 @@ angular.module('mnemosyneApp')
       'Karma'
     ];  
 
-    $scope.requestDepth = 5;
+    $scope.requestDepth = 1;
     $scope.searchResult = "Hier erscheinen die Ergebnisse";
-    $scope.searchTerm = "search Term";
+    $scope.searchTerm = "";
     $scope.loadingStopped = true;
 
-    $scope.triggerSearch = function() {
+    $scope.triggerSearch = function(event) {
+
+        var searchString = angular.element(document.querySelector('.overlay-search-selector input')).val();
+        //TODO: Implement random search
+        
         // Starting the Mnemosyne request:
-        var request = new MnemosyneRequest($scope.searchTerm, angular.copy($scope.requestDepth), function(result) {
+        var request = new MnemosyneRequest(searchString, angular.copy($scope.requestDepth), function(result) {
             $scope.fullData = result;
             $scope.parseResult(result);
             $scope.loadingStopped = true;
@@ -43,6 +47,72 @@ angular.module('mnemosyneApp')
         }
     };
 
+    $scope.searchButtonClick = function(event) {
+        var searchButton = angular.element(event.srcElement),
+            overlay = searchButton.next();
+
+            console.log(searchButton.hasClass('active'));
+            console.log(overlay.children().hasClass('selected'));
+            console.log(overlay.children());
+
+            if (searchButton.hasClass('active')
+                && (angular.element(overlay.children()[0]).hasClass('selected')
+                    || angular.element(overlay.children()[1]).hasClass('selected'))) {
+                $scope.triggerSearch();
+                searchButton.html("RESTART");
+            } else if (!searchButton.hasClass('active')
+                && (angular.element(overlay.children()[0]).hasClass('selected')
+                    || angular.element(overlay.children()[1]).hasClass('selected'))) {
+                searchButton.html("GO");
+            }
+            console.log(overlay);
+    };
+
+    $scope.selectSearchStyle = function(event) {
+        var searchStyleElements = angular.element(document.querySelectorAll('.overlay-search-selector')),
+            clickedElement = (angular.element(event.srcElement).hasClass('.overlay-search-selector'))
+                            ? angular.element(event.srcElement)
+                            : angular.element(event.srcElement).parent(),
+            searchButton = angular.element(document.querySelector('#button-search'));
+
+        if (clickedElement.hasClass('selected')) {
+            clickedElement.removeClass('selected');
+            searchButton.html("RESTART");
+        } else {
+            searchStyleElements.removeClass('selected');
+            clickedElement.addClass('selected');
+            searchButton.html("GO");
+        }
+    };
+
+    $scope.increaseSearchDepth = function(event) {
+        $scope.requestDepth = Math.min(5, $scope.requestDepth + 1);
+        $scope.displaySearchDepth();
+    };
+
+    $scope.decreaseSearchDepth = function(event) {
+        $scope.requestDepth = Math.max(1, $scope.requestDepth - 1);
+        $scope.displaySearchDepth();
+    };
+
+    $scope.displaySearchDepth = function() {
+        console.log($scope.requestDepth);
+        var depthIndicatorSteps = angular.element(document.querySelectorAll('.depth-indicator-step')),
+            singleStep,
+            i,
+            length = 5;
+
+        for (i = 0; i < length; i++) {
+            singleStep = angular.element(depthIndicatorSteps[i]);
+
+            if (i <= $scope.requestDepth - 1) {
+                singleStep.addClass('active');
+            } else {
+                singleStep.removeClass('active');
+            }
+        }
+    };
+
     //JUST A DUMMY THING FOR NOW:
     $scope.parseResult = function(result) {
 
@@ -50,26 +120,26 @@ angular.module('mnemosyneApp')
             name: result[0].requestResults[0].searchTerm,
         });
 
-        var person2 = new PersonNode({
-            name: result[0].requestResults[1].searchTerm,
-        });
+        // var person2 = new PersonNode({
+        //     name: result[0].requestResults[1].searchTerm,
+        // });
 
-        var person3 = new PersonNode({
-            name: result[0].requestResults[2].searchTerm,
-        });
+        // var person3 = new PersonNode({
+        //     name: result[0].requestResults[2].searchTerm,
+        // });
 
-        var person4 = new PersonNode({
-            name: result[0].requestResults[3].searchTerm,
-        });
+        // var person4 = new PersonNode({
+        //     name: result[0].requestResults[3].searchTerm,
+        // });
 
-        var person5 = new PersonNode({
-            name: result[0].requestResults[4].searchTerm,
-        });
+        // var person5 = new PersonNode({
+        //     name: result[0].requestResults[4].searchTerm,
+        // });
 
         $scope.searchResult = '' + person.name
-            + '\n'  + person2.name
-            + '\n'  + person3.name
-            + '\n'  + person4.name
-            + '\n'  + person5.name;
+            // + '\n'  + person2.name
+            // + '\n'  + person3.name
+            // + '\n'  + person4.name
+            // + '\n'  + person5.name;
     };
   });

@@ -2,13 +2,7 @@
     <div id="loading-animation" ng-hide="loadingStopped">
         <img src="images/loading.gif" alt="Loading...">
     </div>
-    <p>
-        With this form you can make a testcall for a given search term:
-    </p>
-    <form id="search-form" action="" method="post">
-        <input ng-model="searchTerm" type="text" name="search-term" value="" placeholder="Search term">
-        <input ng-click="triggerSearch()" type="submit" name="submit-search" value="Search" id="dummyInput">
-    </form>
+    
     <textarea ng-model="searchResult" name="result-area" rows="5" cols="160" placeholder="The result will be shown here">
         {{searchResult}}
     </textarea>

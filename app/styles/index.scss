@@ -1,3 +1,10 @@
+/**
+ * STANDARD ELEMENTS
+ */
+html {
+    overflow: hidden;
+}
+
 // Fonts
 @font-face {
     font-family: 'FiraMono';
@@ -35,21 +42,7 @@ textarea {
     resize: none;
 }
 
-::-webkit-input-placeholder {
-   color: $colorBlack;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-   color: $colorBlack;  
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-   color: $colorBlack;  
-}
-
-:-ms-input-placeholder {  
-   color: $colorBlack;  
-}
+@include placeholderColor($colorBlack);
 
 #loading-animation {
     position: absolute;

@@ -20,16 +20,25 @@
             bottom: 76px;
             width: 350px;
 
-            &.hidden {
-                visibility: hidden;
-            }
+            // TODO: Replace webkit transform with a vendor specifi mixin!!
+            -webkit-transform: translate3d(0px, 0px, 0px);
+            -webkit-transition: -webkit-transform 0.3s ease-in-out;
+            z-index: 0;
             
             &.overlay-left {
                 left: 0px;
+
+                &.hidden {
+                    -webkit-transform: translate3d(200%, 0px, 0px);
+                }
             }
 
             &.overlay-right {
                 right: 0px;
+
+                &.hidden {
+                    -webkit-transform: translate3d(-200%, 0px, 0px);
+                }
             }
         }
 
@@ -42,19 +51,28 @@
             max-height: 300px;
             overflow: scroll;
 
-            &.testClass {
-                background-color: green;
-            }
-
             &.overlay-search-selector {
                 width: 50%;
                 height: 100px;
                 text-align: center;
 
+                &.selected {
+                    background-color: $colorBlack;
+                    border-color: $colorMain;
+                    color: $colorMain;
+
+                    input {
+                        color: $colorMain;
+                    }
+
+                    @include placeholderColor($colorMain);
+                }
+
                 input {
                     text-align: center;
                     width: 98%;
                     height: 98%;
+                    background-color: transparent;
                 }
 
                 div {

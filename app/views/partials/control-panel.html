@@ -1,13 +1,13 @@
 <section class="control-panel">
     <div class="control-panel-wrapper">
         <div id="control-search">
-            <button id="button-search" class="standard-button" ng-click="standardButtonClick($event)">RESTART</button>
+            <button id="button-search" class="standard-button" ng-click="searchButtonClick($event); standardButtonClick($event);">RESTART</button>
             <div id="search-overlay" class="standard-overlay overlay-right overlay-group-row hidden">
-                <div class="overlay-element overlay-search-selector">
+                <div class="overlay-element overlay-search-selector" ng-click="selectSearchStyle($event)">
                     <div>START RANDOM SEARCH</div>
                 </div>
-                <div class="overlay-element overlay-search-selector">
-                    <input type="text" placeholder="TYPE A WORD">           
+                <div class="overlay-element overlay-search-selector" ng-click="selectSearchStyle($event)">
+                    <input ng-model="searchTerm" type="text" placeholder="TYPE A WORD" value="{{searchTerm}}">                            
                 </div>
             </div>
         </div>
@@ -20,15 +20,15 @@
             <div class="control-depth-wrapper">
                 <div class="depth-indicator">
                     <div class="depth-indicator-step active"></div>
-                    <div class="depth-indicator-step active"></div>
+                    <div class="depth-indicator-step"></div>
                     <div class="depth-indicator-step"></div>
                     <div class="depth-indicator-step"></div>
                     <div class="depth-indicator-step"></div>
                 </div>
                 <div>
-                    <button id="button-plus" class="standard-button label-left">+</button>
+                    <button id="button-minus" class="standard-button label-left" ng-click="decreaseSearchDepth()">-</button>
                     <div class="circle"></div>
-                    <button id="button-minus" class="standard-button label-right">-</button>
+                    <button id="button-plus" class="standard-button label-right" ng-click="increaseSearchDepth()">+</button>
                 </div>          
             </div>
         </div>
@@ -37,11 +37,11 @@
             <button id="button-share" class="standard-button" ng-click="standardButtonClick($event)">SHARE</button>
             <div id="share-overlay" class="standard-overlay overlay-left overlay-group-column hidden">
                 <div class="overlay-element">
-                    <label>AN: </label>
+                    <label>TO: </label>
                     <input type="text">
                 </div>
                 <div class="overlay-element">
-                    <label>VON: </label>
+                    <label>FROM: </label>
                     <input type="text">
                 </div>
                 <div class="overlay-element">
