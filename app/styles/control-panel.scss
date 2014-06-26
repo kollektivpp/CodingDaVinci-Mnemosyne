@@ -29,7 +29,7 @@
                 left: 0px;
 
                 &.hidden {
-                    -webkit-transform: translate3d(200%, 0px, 0px);
+                    -webkit-transform: translate3d(280%, 0px, 0px);
                 }
             }
 
@@ -37,7 +37,7 @@
                 right: 0px;
 
                 &.hidden {
-                    -webkit-transform: translate3d(-200%, 0px, 0px);
+                    -webkit-transform: translate3d(-280%, 0px, 0px);
                 }
             }
         }
