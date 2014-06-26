@@ -32,8 +32,13 @@ angular.module('mnemosyneApp')
     $scope.standardButtonClick = function(event) {
         var clickedButton = angular.element(event.srcElement),
             overlay = clickedButton.next(),
+            searchButton = angular.element(document.querySelector('#button-search')),
             allButtons = angular.element(document.querySelectorAll('.standard-button')),
             allOverlays = angular.element(document.querySelectorAll('.standard-overlay'));
+
+        if (clickedButton[0] !== searchButton[0]) {
+            searchButton.html("RESTART");
+        }
 
         if (clickedButton.hasClass('active')) {
             clickedButton.removeClass('active');
@@ -51,10 +56,6 @@ angular.module('mnemosyneApp')
         var searchButton = angular.element(event.srcElement),
             overlay = searchButton.next();
 
-            console.log(searchButton.hasClass('active'));
-            console.log(overlay.children().hasClass('selected'));
-            console.log(overlay.children());
-
             if (searchButton.hasClass('active')
                 && (angular.element(overlay.children()[0]).hasClass('selected')
                     || angular.element(overlay.children()[1]).hasClass('selected'))) {
@@ -65,7 +66,6 @@ angular.module('mnemosyneApp')
                     || angular.element(overlay.children()[1]).hasClass('selected'))) {
                 searchButton.html("GO");
             }
-            console.log(overlay);
     };
 
     $scope.selectSearchStyle = function(event) {
@@ -96,8 +96,9 @@ angular.module('mnemosyneApp')
     };
 
     $scope.displaySearchDepth = function() {
-        console.log($scope.requestDepth);
         var depthIndicatorSteps = angular.element(document.querySelectorAll('.depth-indicator-step')),
+            knobElement = angular.element(document.querySelector('.knob')),
+            knobPositionDegree,
             singleStep,
             i,
             length = 5;
@@ -111,6 +112,11 @@ angular.module('mnemosyneApp')
                 singleStep.removeClass('active');
             }
         }
+
+        knobPositionDegree = - 60 + (20 * $scope.requestDepth);
+        knobElement.css({
+            "-webkit-transform": "rotate(" + knobPositionDegree + "deg)"
+        })
     };
 
     //JUST A DUMMY THING FOR NOW:

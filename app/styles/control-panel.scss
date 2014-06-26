@@ -167,7 +167,7 @@
         height: 150px;
     }
 
-    .circle {
+    .knob {
         position: absolute;
         bottom: -16px;
         left: 55px;
@@ -176,6 +176,18 @@
         height: 100px;
         border-radius: 50%;
         background-color: $colorBlack;
+        // TODO: VENDOR PREFIXES!
+        -webkit-transition: -webkit-transform 0.1s ease-in-out;
+        -webkit-transform: rotate(-40deg);
+
+        .knob-indicator {
+            position: absolute;
+            left: 47px;
+            top: 5px;
+            width: 5px;
+            height: 20px;
+            background-color: $colorWhite;
+        }
     }
 
     .control-depth-wrapper {
