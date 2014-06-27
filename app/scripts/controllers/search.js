@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mnemosyneApp')
-  .controller('SearchCtrl', function ($scope, $http, DDBParser, MnemosyneRequest, EventSystem, PersonNode) {
+  .controller('SearchCtrl', function ($scope, $http, $compile, DDBParser, MnemosyneRequest, EventSystem, NodeFactory) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -9,7 +9,6 @@ angular.module('mnemosyneApp')
     ];  
 
     $scope.requestDepth = 1;
-    $scope.searchResult = "Hier erscheinen die Ergebnisse";
     $scope.searchTerm = "";
     $scope.loadingStopped = true;
 
@@ -21,9 +20,15 @@ angular.module('mnemosyneApp')
         // Starting the Mnemosyne request:
         var request = new MnemosyneRequest(searchString, angular.copy($scope.requestDepth), function(result) {
             $scope.fullData = result;
-            $scope.parseResult(result);
+            $scope.displayResult(result);
             $scope.loadingStopped = true;
         });
+
+        $scope.result1 = {};
+        $scope.result2 = {};
+        $scope.result3 = {};
+        $scope.result4 = {};
+        $scope.result5 = {};
 
         request.startSearch();
         $scope.loadingStopped = false;
@@ -119,33 +124,14 @@ angular.module('mnemosyneApp')
         })
     };
 
-    //JUST A DUMMY THING FOR NOW:
-    $scope.parseResult = function(result) {
-
-        var person = new PersonNode({
-            name: result[0].requestResults[0].searchTerm,
-        });
-
-        // var person2 = new PersonNode({
-        //     name: result[0].requestResults[1].searchTerm,
-        // });
-
-        // var person3 = new PersonNode({
-        //     name: result[0].requestResults[2].searchTerm,
-        // });
-
-        // var person4 = new PersonNode({
-        //     name: result[0].requestResults[3].searchTerm,
-        // });
-
-        // var person5 = new PersonNode({
-        //     name: result[0].requestResults[4].searchTerm,
-        // });
-
-        $scope.searchResult = '' + person.name
-            // + '\n'  + person2.name
-            // + '\n'  + person3.name
-            // + '\n'  + person4.name
-            // + '\n'  + person5.name;
+    $scope.displayResult = function(result) {
+        
+        var requestThreadDepth = result[0].requestResults.length;
+                
+        $scope.result1 = NodeFactory.createNodeWithOutcome(result[0].requestResults[requestThreadDepth - 1].outcome);
+        $scope.result2 = NodeFactory.createNodeWithOutcome(result[1].requestResults[requestThreadDepth - 1].outcome);
+        $scope.result3 = NodeFactory.createNodeWithOutcome(result[2].requestResults[requestThreadDepth - 1].outcome);
+        $scope.result4 = NodeFactory.createNodeWithOutcome(result[3].requestResults[requestThreadDepth - 1].outcome);
+        $scope.result5 = NodeFactory.createNodeWithOutcome(result[4].requestResults[requestThreadDepth - 1].outcome);
     };
   });

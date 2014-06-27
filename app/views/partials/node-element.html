@@ -1,0 +1,17 @@
+<div class="nodeElement" ng-if="outcome.type">
+
+    <div ng-if="outcome.type === 'PERSON' && outcome.thumbnail !== undefined" class="flexWrapperColumn">
+        <img src="{{outcome.thumbnail}}" alt="{{outcome.title}}" class="thumbnail">
+        <p class="person-title">{{outcome.title}}</p>
+    </div>
+
+    <div ng-if="outcome.type === 'PERSON' && outcome.thumbnail === undefined && outcome.dateOfBirth !== undefined && outcome.dateOfDeath !== undefined" class="flexWrapperColumn">
+        <p class="person-title">{{outcome.title}}</p>
+        <p class="person-birthdate">{{outcome.dateOfBirth}}</p>
+        <p class="person-deathdate">{{outcome.dateOfDeath}}</p>
+    </div>
+
+    <div ng-if="outcome.type === 'FACET'">
+        ICH BIN EINE FACETTE, YO!
+    </div>
+</div>

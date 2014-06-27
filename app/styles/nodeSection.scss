@@ -16,9 +16,57 @@
 
         .nodeElement {
             position: absolute;
-            width: 125%;
-            height: 35%;
-            background-color: yellow;
+            max-width: 125%;
+            height: 45%;
+
+            .flexWrapperColumn {
+                @include flexbox;
+                @include flex-direction(column);
+                @include align-items(center);
+                @include justify-content(center);
+
+                max-height: 100%;
+                max-width: 100%;
+                
+                img.thumbnail {
+                    max-height: 90%;
+                    max-width: 90%;
+                }
+
+                p:not(:first-child) {
+                    padding: 5px 0 0 0;
+
+                    &.person-title {
+                        text-align: center;
+                    }
+                    &.person-birthdate,
+                    &.person-deathdate {
+                        &:before {
+
+                        }
+                    }
+
+                    &.person-birthdate {
+                        &:before {
+                            content: "✵";
+                        }   
+                    }
+                    &.person-deathdate {
+                        &:before {
+                            content: "✟";
+                        } 
+                    }
+                }    
+            }
+
+            &:before {
+                font-family: "FiraMono";
+                font-size: 10px;
+                font-weight: bold;
+                position: absolute;
+                left: -10px;
+                top: 1px;
+            }
         }
 
         &:nth-child(1) {
