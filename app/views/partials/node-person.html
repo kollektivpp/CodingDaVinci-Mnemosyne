@@ -1,0 +1,16 @@
+<div>
+    <div ng-if="outcome.thumbnail !== undefined" class="flexWrapperColumn">
+        <img src="{{outcome.thumbnail}}" alt="{{outcome.title}}" class="thumbnail">
+        <p class="person-title">{{outcome.title}}</p>
+    </div>
+
+    <div ng-if="outcome.thumbnail === undefined && outcome.dateOfBirth !== undefined && outcome.dateOfDeath !== undefined" class="flexWrapperColumn">
+        <p class="person-title">{{outcome.title}}</p>
+        <p class="person-birthdate">{{outcome.dateOfBirth}}</p>
+        <p class="person-deathdate">{{outcome.dateOfDeath}}</p>
+    </div>
+
+    <div ng-if="outcome.variantName.length >= 5" class="tagcloud">
+        <div ng-repeat="name in outcome.variantName">{{name}}</div>
+    </div>
+</div>

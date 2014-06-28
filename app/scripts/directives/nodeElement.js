@@ -8,5 +8,5 @@ angular.module('mnemosyneApp')
                 outcome: '=result'
             },
             templateUrl: 'views/partials/node-element.html'
-        }
+        };
     });

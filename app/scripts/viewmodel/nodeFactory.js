@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mnemosyneApp').factory('NodeFactory', function (PersonNode) {
+angular.module('mnemosyneApp').factory('NodeFactory', function (PersonNode, FacetNode) {
 
     return {
         createNodeWithOutcome: function(outcomeData) {
@@ -11,7 +11,7 @@ angular.module('mnemosyneApp').factory('NodeFactory', function (PersonNode) {
             if (outcomeData.type === "PERSON") {
                 return new PersonNode(outcomeData);
             } else if (outcomeData.type === "FACET") {
-                return {}; //TODO!
+                return new FacetNode(outcomeData);
             } else {
                 return {
                     title: "There is no node type available for type: " + outcomeData.type
