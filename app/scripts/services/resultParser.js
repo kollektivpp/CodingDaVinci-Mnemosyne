@@ -12,7 +12,7 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
         resultObject.randomNumber = Math.floor(Math.random() * 100);
         console.log("result.randomNumber: " + resultObject.randomNumber);
 
-        switch ((1000 * resultObject.randomNumber - resultObject.randomNumber) % 3) {
+        switch ((1000 * resultObject.randomNumber) % 3) {
             // entities (Persons)
             case 0:
                 console.log("CASE 0");
@@ -37,6 +37,7 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
             case 2:
                 console.log("CASE 2");
                 resultObject.type = "DOC";
+                resultObject = this.parseDocOutcome(resultObject);
                 if (resultObject.title) {
                     break;
                 }
@@ -73,6 +74,23 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
         resultObject.facets = this.responseData.facets
         return resultObject;
     };
+
+    ResultParser.prototype.parseDocOutcome = function(resultObject) {
+
+        var reconstructableIndex = resultObject.randomNumber % this.responseData.results[0].docs.length;
+        var docData = this.responseData.results[0].docs[reconstructableIndex];
+        console.log("doc data:");
+        console.log(this.responseData.results[0].docs[reconstructableIndex]);
+        if (docData !== undefined) {
+            resultObject.title = docData.label;
+            resultObject.subtitle = docData.subtitle;
+            resultObject.thumbnail = docData.thumbnail;
+            resultObject.category = docData.category;
+            resultObject.mediatype = docData.media;
+
+        }
+        return resultObject;
+    }
 
 
     return ResultParser;
