@@ -1,4 +1,19 @@
-<section class="meta-view" ng-controller="MetaCtrl" >
-    <!-- {{metaData}} -->
-    <button class="back-button" ng-click="backToSearch()">BACK</button>
+<section class="meta-view" ng-controller="MetaCtrl">
+
+    <meta-start class="meta-start" metadata="metaData">
+    </meta-start>
+
+    <div class="meta-thread-section">
+        <div class="meta-thread-wrapper">
+            <meta-thread metadata="thread1" threadindex="1"></meta-thread>
+            <meta-thread metadata="thread2" threadindex="2"></meta-thread>
+        </div>
+        <div class="meta-thread-wrapper">
+            <meta-thread metadata="thread3" threadindex="3"></meta-thread>
+        </div>
+        <div class="meta-thread-wrapper">
+            <meta-thread metadata="thread4" threadindex="4"></meta-thread>
+            <meta-thread metadata="thread5" threadindex="5"></meta-thread>
+        </div>
+    </div>
 </section>

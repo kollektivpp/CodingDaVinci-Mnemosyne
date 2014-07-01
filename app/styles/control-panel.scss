@@ -141,11 +141,8 @@
             color: $colorMain;
             border: $widthBorder solid $colorMain;
 
-            &:active,
-            &.active {
-                background-color: $colorMain;
-                border-color: $colorBlack;
-                color: $colorBlack;
+            &:active{
+                -webkit-transform: scale3d(0.96,0.96,0.96);
             }
         }
     }
