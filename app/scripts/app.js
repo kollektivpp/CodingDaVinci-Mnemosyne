@@ -17,6 +17,10 @@ angular
         templateUrl: 'views/search.html',
         controller: 'SearchCtrl'
       })
+      .when('/meta', {
+        templateUrl: 'views/meta.html',
+        controller: 'MetaCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

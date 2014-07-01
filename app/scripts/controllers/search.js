@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('mnemosyneApp')
-  .controller('SearchCtrl', function ($scope, $http, $compile, DDBParser, MnemosyneRequest, EventSystem, NodeFactory) {
+  .controller('SearchCtrl', function ($scope, $http, $compile, $location, SharedResult, MnemosyneRequest, EventSystem, NodeFactory) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];  
 
-    $scope.requestDepth = 1;
-    $scope.searchTerm = "";
+    $scope.requestDepth = (SharedResult.data.length !== 0) ? SharedResult.data[0].requestResults.length : 1;
+    $scope.searchTerm = (SharedResult.data.length !== 0) ? SharedResult.data[0].startSearchTerm : "";
     $scope.loadingStopped = true;
 
     $scope.triggerSearch = function(event) {
@@ -19,8 +19,8 @@ angular.module('mnemosyneApp')
         
         // Starting the Mnemosyne request:
         var request = new MnemosyneRequest(searchString, angular.copy($scope.requestDepth), function(result) {
-            $scope.fullData = result;
-            $scope.displayResult(result);
+            SharedResult.data = result;
+            $scope.displayResult();
             $scope.loadingStopped = true;
         });
 
@@ -71,6 +71,10 @@ angular.module('mnemosyneApp')
                     || angular.element(overlay.children()[1]).hasClass('selected'))) {
                 searchButton.html("GO");
             }
+    };
+
+    $scope.openMetaView = function(event) {
+        $location.path('/meta');
     };
 
     $scope.selectSearchStyle = function(event) {
@@ -124,14 +128,26 @@ angular.module('mnemosyneApp')
         })
     };
 
-    $scope.displayResult = function(result) {
-        
-        var requestThreadDepth = result[0].requestResults.length;
+    $scope.displayResult = function() {
+        var requestThreadDepth = SharedResult.data[0].requestResults.length;
                 
-        $scope.result1 = NodeFactory.createNodeWithOutcome(result[0].requestResults[requestThreadDepth - 1].outcome);
-        $scope.result2 = NodeFactory.createNodeWithOutcome(result[1].requestResults[requestThreadDepth - 1].outcome);
-        $scope.result3 = NodeFactory.createNodeWithOutcome(result[2].requestResults[requestThreadDepth - 1].outcome);
-        $scope.result4 = NodeFactory.createNodeWithOutcome(result[3].requestResults[requestThreadDepth - 1].outcome);
-        $scope.result5 = NodeFactory.createNodeWithOutcome(result[4].requestResults[requestThreadDepth - 1].outcome);
+        $scope.result1 = NodeFactory.createNodeWithOutcome(SharedResult.data[0].requestResults[requestThreadDepth - 1].outcome);
+        $scope.result2 = NodeFactory.createNodeWithOutcome(SharedResult.data[1].requestResults[requestThreadDepth - 1].outcome);
+        $scope.result3 = NodeFactory.createNodeWithOutcome(SharedResult.data[2].requestResults[requestThreadDepth - 1].outcome);
+        $scope.result4 = NodeFactory.createNodeWithOutcome(SharedResult.data[3].requestResults[requestThreadDepth - 1].outcome);
+        $scope.result5 = NodeFactory.createNodeWithOutcome(SharedResult.data[4].requestResults[requestThreadDepth - 1].outcome);
     };
+
+    $scope.$on('$viewContentLoaded', function() {
+        
+        if (SharedResult.data.length !== 0) {
+            $scope.displayResult();
+
+            // Timeout needed for the knob element to be available
+            setTimeout( function() {
+                $scope.displaySearchDepth();
+            }, 100);
+        }
+    });
+
   });
