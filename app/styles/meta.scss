@@ -43,7 +43,7 @@
                 @include flexbox;
                 @include flex-direction(row);
                 @include align-items(center);
-                @include justify-content(space-around);
+                @include justify-content(center);
 
                 width: 50%;
                 height: 100%;

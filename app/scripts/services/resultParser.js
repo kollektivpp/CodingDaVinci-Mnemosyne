@@ -12,7 +12,7 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
         resultObject.randomNumber = Math.floor(Math.random() * 100);
         console.log("result.randomNumber: " + resultObject.randomNumber);
 
-        switch ((1000 * resultObject.randomNumber) % 3) {
+        switch ((1000 * resultObject.randomNumber) * Math.floor(Math.random() * 100) % 3) {
             // entities (Persons)
             case 0:
                 console.log("CASE 0");
@@ -28,10 +28,11 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
             case 1:
                 console.log("CASE 1");
                 resultObject.type = "FACET";
-                resultObject = this.parseEntityOutcome(resultObject);
-                //if (resultObject.title) {
+                resultObject = this.parseFacetOutcome(resultObject);
+
+                if (resultObject.title) {
                     break;
-                //}
+                }
 
             // results[0].docs
             case 2:
@@ -44,6 +45,8 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
 
             default:
                 console.log("DEAD END");
+                // TODO: WHAT HAPPENS HERE?! CAN WE AVOID THIS CASE? IF YES, HOW?
+                // MAYBE BY CHANGING THE SWITCH CASE ORDER? WHICH TYPE IS THE MOST LIKELY TO BE ALWAYS THERE IN A RESPONSE???
                 resultObject.type = "UNDEFINED";
                 resultObject.title = "Sackgasse";
         }
@@ -71,9 +74,31 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
             resultObject.professionOrOccupation = entityData.professionOrOccupation;
         }
 
-        resultObject.facets = this.responseData.facets
+        resultObject.facets = this.responseData.facets;
         return resultObject;
     };
+
+    ResultParser.prototype.parseFacetOutcome = function(resultObject) {
+
+        var reconstructableIndex; // = resultObject.randomNumber % this.responseData.results[0].docs.length;
+
+        if ((resultObject.randomNumber * 17 - resultObject.randomNumber + 3) % 2 === 1) {
+            // affiliates_fct
+            if (this.responseData.facets[0] && this.responseData.facets[0].facetValues.length > 0) {
+                reconstructableIndex = resultObject.randomNumber % this.responseData.facets[0].facetValues.length;
+                resultObject.title = this.responseData.facets[0].facetValues[reconstructableIndex].value;
+            }
+        } else {
+            // place_fct
+            if (this.responseData.facets[2] && this.responseData.facets[2].facetValues.length > 0) {
+                reconstructableIndex = resultObject.randomNumber % this.responseData.facets[2].facetValues.length;
+                resultObject.title = this.responseData.facets[2].facetValues[reconstructableIndex].value;
+            }
+        }
+
+        resultObject.facets = this.responseData.facets;
+        return resultObject
+    }
 
     ResultParser.prototype.parseDocOutcome = function(resultObject) {
 

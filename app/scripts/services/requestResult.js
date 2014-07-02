@@ -24,13 +24,13 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
 
         switch(this.outcome.type) {
             case "PERSON":
-                return this.nextSearchTermForPerson();
+                return this.formatSearchTerm(this.nextSearchTermForPerson());
                 break;
             case "FACET" :
-                return this.nextSearchTermForFacet();
+                return this.formatSearchTerm(this.nextSearchTermForFacet());
                 break;
             case "DOC":
-                return this.nextSearchTermForDoc();
+                return this.formatSearchTerm(this.nextSearchTermForDoc());
                 break;
             default:
                 "TYPE COULD NOT BE RESOLVED";
@@ -139,19 +139,23 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
                 nextSearchTerm = "Neue Suche";
         }
 
-            console.log("NEXT SEARCH TERM");
-            console.log(nextSearchTerm);
-            nextSearchTerm = nextSearchTerm.replace(/:/g, ' ');
-            nextSearchTerm = nextSearchTerm.replace(/<match>/g, '');
-            nextSearchTerm = nextSearchTerm.replace(/<\/match>/g, '');
-            if (nextSearchTerm.length > 60) {
-                nextSearchTerm = nextSearchTerm.substring(0,60);
-            }
-            console.log(nextSearchTerm);
-
-
         return nextSearchTerm;
     }
+
+    RequestResult.prototype.formatSearchTerm = function(searchTerm) {
+
+            searchTerm = searchTerm.replace(/:/g, ' ');
+            searchTerm = searchTerm.replace(/<match>/g, '');
+            searchTerm = searchTerm.replace(/<\/match>/g, '');
+            searchTerm = searchTerm.replace(/([)||(])/g, ' ');
+            if (searchTerm.length > 100) {
+                searchTerm = searchTerm.substring(0,100);
+            }
+            console.log("NEW SEARCH TERM:");
+            console.log(searchTerm);
+
+            return searchTerm;
+    };
 
     return RequestResult;
 });
