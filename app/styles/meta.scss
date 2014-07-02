@@ -1,11 +1,13 @@
 .meta-view {
-
     width: 100%;
     height: 100%;
     @include flexbox;
     @include flex-direction(row);
     // @include justify-content(flex-start);
     @include align-items(stretch);
+    
+    font-family: "FiraMono";
+    font-size: 9px;
 
     .meta-start {
         width: 15%;
@@ -41,12 +43,11 @@
                 @include flexbox;
                 @include flex-direction(row);
                 @include align-items(center);
-                @include justify-content(flex-start);
+                @include justify-content(space-around);
 
                 width: 50%;
                 height: 100%;
-                //TODO: Remove dummy border!
-                border: 1px solid green;
+                padding: 0 3% 0 3%;
 
                 .meta-element-wrapper {
                     position: relative;
@@ -57,13 +58,22 @@
 
                     .meta-element {
                         height: 100%;
-                        overflow: hidden;
+                        overflow: scroll;
                         border: 1px solid $colorWhite;
+
+                        p {
+                            padding: 2px 3px 2px 3px;
+
+                            &.highlighted {
+                                color: $colorMain;
+                            }
+                        }
                     }
 
                     .element-index {
                         position: absolute;
-                        top: -20px;
+                        top: -18px;
+                        font-size: 15px;
                     }
                 }
 

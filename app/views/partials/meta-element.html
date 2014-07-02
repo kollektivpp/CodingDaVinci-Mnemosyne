@@ -1,7 +1,8 @@
 <div class="meta-element-wrapper">
     <div class="element-index">{{elementIndex}}</div>
     <div class="meta-element">
-            META!!!!
-        {{elementData.outcome.title}}
+        <p class="highlighted">outcome.title: {{elementData.outcome.title}}</p>
+        <p>thisSearchTerm: {{elementData.searchTerm}}</p>
+        <p>nextSearchTerm: {{elementData.getNextSearchTerm()}}</p>
     </div>
 </div>

@@ -29,6 +29,9 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
             case "FACET" :
                 return this.nextSearchTermForFacet();
                 break;
+            case "DOC":
+                return this.nextSearchTermForDoc();
+                break;
             default:
                 "TYPE COULD NOT BE RESOLVED";
                 return "UNDEFINED";
@@ -102,9 +105,52 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
 
             elem.facetValues.forEach(function (innerElem) {
                 facetarray.push(innerElem.value);
+                // console.log("FACETARRAY:");
+                // console.log(facetarray);
             });
         });
-        return facetarray[Math.floor(Math.random() * facetarray.length)];
+
+
+
+        return facetarray[(Math.floor(this.outcome.randomNumber + 17 * facetarray.length))%facetarray.length];
+    }
+
+    RequestResult.prototype.nextSearchTermForDoc = function () {
+        var nextSearchTerm;
+
+        switch((this.outcome.randomNumber + this.outcome.randomNumber + 23) % 2 ) {
+            case 0:
+                // TITLE
+                nextSearchTerm = this.outcome.title;
+
+                if (nextSearchTerm) {
+                    break;
+                }
+
+            case 1:
+                // SUBTITLE
+                nextSearchTerm = this.outcome.subtitle;
+
+                if (nextSearchTerm) {
+                    break;
+                }
+
+            default:
+                nextSearchTerm = "Neue Suche";
+        }
+
+            console.log("NEXT SEARCH TERM");
+            console.log(nextSearchTerm);
+            nextSearchTerm = nextSearchTerm.replace(/:/g, ' ');
+            nextSearchTerm = nextSearchTerm.replace(/<match>/g, '');
+            nextSearchTerm = nextSearchTerm.replace(/<\/match>/g, '');
+            if (nextSearchTerm.length > 60) {
+                nextSearchTerm = nextSearchTerm.substring(0,60);
+            }
+            console.log(nextSearchTerm);
+
+
+        return nextSearchTerm;
     }
 
     return RequestResult;
