@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mnemosyneApp').service('ResultParser', function () {
+angular.module('mnemosyneApp').service('ResultParser', function ($http, RequestBuilder) {
 
     function ResultParser(responseData) {
         this.responseData = responseData;
@@ -114,6 +114,8 @@ angular.module('mnemosyneApp').service('ResultParser', function () {
             resultObject.mediatype = docData.media;
 
         }
+        resultObject.image = RequestBuilder.getThumbnailUrl(resultObject.thumbnail);
+
         return resultObject;
     }
 

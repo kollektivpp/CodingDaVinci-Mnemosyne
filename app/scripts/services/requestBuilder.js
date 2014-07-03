@@ -20,4 +20,9 @@ angular.module('mnemosyneApp').service('RequestBuilder', function ($http) {
 
         return requestObject;
     };
+
+    this.getThumbnailUrl = function(path) {
+        return 'http://api.deutsche-digitale-bibliothek.de' + path + '?' + oAuthKey;
+        
+    }
 });
