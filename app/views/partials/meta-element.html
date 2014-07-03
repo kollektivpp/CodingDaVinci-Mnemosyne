@@ -1,8 +1,16 @@
-<div class="meta-element-wrapper">
+<div class="meta-element-wrapper turned-over">
     <div class="element-index">{{elementIndex}}</div>
     <div class="meta-element">
-        <p class="highlighted">outcome.title: {{elementData.outcome.title}}</p>
-        <p>thisSearchTerm: {{elementData.searchTerm}}</p>
-        <p>nextSearchTerm: {{elementData.getNextSearchTerm()}}</p>
+        <div class="fadeout-overlay"></div>
+        <p>{{outcome(elementData.responseData).title}}</p>
+        <p ng-if="random()">{{outcome(elementData.responseData).title}}</p>
+        <p ng-if="random()">{{outcome(elementData.responseData).title}}</p>
+        <p class="highlight-ready">{{elementData.outcome.title}}</p>
+        <p class="nextSearchTerm">{{elementData.searchTerm}}</p>
+        <p ng-if="random()">{{outcome(elementData.responseData).title}}</p>
+        <p class="thisSearchTerm">{{elementData.getNextSearchTerm()}}</p>
+        <p>{{outcome(elementData.responseData).title}}</p>
+        <p>{{outcome(elementData.responseData).title}}</p>
+        <p>{{outcome(elementData.responseData).title}}</p>
     </div>
 </div>

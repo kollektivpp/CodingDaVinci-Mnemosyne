@@ -1,6 +1,8 @@
 .meta-view {
     width: 100%;
     height: 100%;
+    background-color: $colorBlack;
+
     @include flexbox;
     @include flex-direction(row);
     // @include justify-content(flex-start);
@@ -14,10 +16,35 @@
         position: relative;
         background-color: $colorMain;
 
+        -webkit-transition: -webkit-transform .6s ease-in-out;
+                transition: transform .6s ease-in-out;
+
+        p {
+            position: relative;
+            padding: 6px 6px 5px 6px;
+            margin: 10px 20px 10px 45px;
+
+            .index {
+                position: absolute;
+                top: 0px;
+                left: -34px;
+                font-size: 16px;
+            }
+
+            &.highlighted {
+                border: 1px solid $colorBlack;
+            }
+        }
+
         button {
             position: absolute;
             bottom: 10px;
             left: 10px;
+        }
+
+        &.start-position {
+            -webkit-transform: translate3d(-100%, 0, 0);
+                    transform: translate3d(-100%, 0, 0);
         }
     }
 
@@ -49,6 +76,9 @@
                 height: 100%;
                 padding: 0 3% 0 3%;
 
+                -webkit-perspective: 600;
+                        perspective: 600;
+
                 .meta-element-wrapper {
                     position: relative;
                     height: 80%;
@@ -56,17 +86,39 @@
                     margin-left: 10px;
                     color: $colorWhite;
 
+                    -webkit-backface-visibility: hidden;
+                            backface-visibility: hidden;
+                    -webkit-transition: -webkit-transform 1.0s ease-in-out;
+                            transition: -webkit-transform 1.0s ease-in-out;
+
+                    &.turned-over {
+                        -webkit-transform: rotateY(-180deg);
+                                transform: rotateY(-180deg);
+                    }
+
                     .meta-element {
                         height: 100%;
-                        overflow: scroll;
+                        overflow: hidden;
+                        word-break: break-word;
                         border: 1px solid $colorWhite;
 
                         p {
-                            padding: 2px 3px 2px 3px;
+                            padding: 3px 5px 3px 5px;
+                        -webkit-transition: color 0.7s ease-out;
+                                transition: color 0.7s ease-out;
 
                             &.highlighted {
                                 color: $colorMain;
                             }
+                        }
+
+                        .fadeout-overlay {
+                            height: 100%;
+                            width: 98%;
+                            position: absolute;
+                            background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%,rgba(0,0,0,0.01) 10%,rgba(2,1,1,0.01) 90%,rgba(2,1,1,1) 100%); /* Chrome10+,Safari5.1+ */
+                            background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.01) 10%, rgba(2,1,1,0.01) 90%, rgba(2,1,1,1) 100%); /* FF3.6+ */
+                            background: linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(0,0,0,0.01) 10%,rgba(2,1,1,0.01) 90%,rgba(2,1,1,1) 100%); /* W3C */
                         }
                     }
 

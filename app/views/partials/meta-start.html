@@ -1,5 +1,24 @@
 <div ng-controller="MetaCtrl">
-meta ASTARTTTTTST
-{{metaData.length}}
+
+    <div ng-if="metaData.length > 0">
+        <p ng-if="random()">{{outcome(metaData[0].requestResults[0].responseData).title}}</p>
+        <p ng-if="random()">{{outcome(metaData[0].requestResults[0].responseData).title}}</p>
+        <p class="highlighted"><span class="index">1.1</span>{{metaData[0].requestResults[0].outcome.title}}</p>
+        <p ng-if="random()">{{outcome(metaData[2].requestResults[0].responseData).title}}</p>
+        <p ng-if="random()">{{outcome(metaData[1].requestResults[0].responseData).title}}</p>
+        <p class="highlighted"><span class="index">2.1</span>{{metaData[1].requestResults[0].outcome.title}}</p>
+        <p ng-if="random()">{{outcome(metaData[4].requestResults[0].responseData).title}}</p>
+        <p ng-if="random()">{{outcome(metaData[0].requestResults[0].responseData).title}}</p>
+        <p class="highlighted"><span class="index">3.1</span>{{metaData[2].requestResults[0].outcome.title}}</p>
+        <p ng-if="random()">{{outcome(metaData[0].requestResults[0].responseData).title}}</p>
+        <p ng-if="random()">{{outcome(metaData[3].requestResults[0].responseData).title}}</p>
+        <p class="highlighted"><span class="index">4.1</span>{{metaData[3].requestResults[0].outcome.title}}</p>
+        <p ng-if="random()">{{outcome(metaData[2].requestResults[0].responseData).title}}</p>
+        <p ng-if="random()">{{outcome(metaData[0].requestResults[0].responseData).title}}</p>
+        <p class="highlighted"><span class="index">5.1</span>{{metaData[4].requestResults[0].outcome.title}}</p>
+        <p ng-if="random()">{{outcome(metaData[4].requestResults[0].responseData).title}}</p>
+        <p ng-if="random()">{{outcome(metaData[0].requestResults[0].responseData).title}}</p>
+    </div>
+
     <button class="back-button" ng-click="backToSearch()">BACK</button>
 </div>

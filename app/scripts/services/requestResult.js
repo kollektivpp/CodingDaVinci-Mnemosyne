@@ -147,7 +147,11 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
             searchTerm = searchTerm.replace(/:/g, ' ');
             searchTerm = searchTerm.replace(/<match>/g, '');
             searchTerm = searchTerm.replace(/<\/match>/g, '');
-            searchTerm = searchTerm.replace(/([)||(])/g, ' ');
+            searchTerm = searchTerm.replace(/\[/g, ' ');
+            searchTerm = searchTerm.replace(/\]/g, ' ');
+            searchTerm = searchTerm.replace(/\//g, ' ');
+            searchTerm = searchTerm.replace(/\(/g, ' ');
+            searchTerm = searchTerm.replace(/\)/g, ' ');
             if (searchTerm.length > 100) {
                 searchTerm = searchTerm.substring(0,100);
             }

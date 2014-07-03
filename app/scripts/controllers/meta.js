@@ -1,16 +1,13 @@
 'use strict';
 
 angular.module('mnemosyneApp')
-  .controller('MetaCtrl', function ($scope, $location, SharedResult) {
+  .controller('MetaCtrl', function ($scope, $location, SharedResult, ResultParser) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-
     $scope.metaData = SharedResult.data;
-
-    console.log($scope.metaData);
 
     if ($scope.metaData.length > 0) {
         $scope.thread1 = $scope.metaData[0];
@@ -29,4 +26,25 @@ angular.module('mnemosyneApp')
         $location.path('/search');
     };
 
+    // Animation
+    $scope.flipEventHandler = function(event) {
+        var nextElements = $(this).parents('.meta-element-wrapper').next();
+        nextElements.one('transitionend -webkit-transitionend', $scope.fadeInResult);
+        nextElements.removeClass('turned-over');
+    }
+
+    $scope.fadeInResult = function(event) {
+        var resultElement = $(this).find('.highlight-ready');
+        resultElement.one('transitionend -webkit-transitionend', $scope.flipEventHandler);
+        resultElement.addClass('highlighted');
+    }
+
+    setTimeout( function() {
+        $('.meta-thread .meta-element-wrapper:first-child').one('transitionend -webkit-transitionend', $scope.fadeInResult);
+        $('.meta-thread .meta-element-wrapper:first-child').removeClass('turned-over');
+    }, 800);
+
+    setTimeout( function() {
+        $('.meta-view .meta-start').removeClass('start-position');
+    }, 200);
 });

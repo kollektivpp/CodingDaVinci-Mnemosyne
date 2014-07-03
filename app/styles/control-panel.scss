@@ -173,10 +173,15 @@
         height: 100px;
         border-radius: 50%;
         background-color: $colorBlack;
-        // TODO: VENDOR PREFIXES!
-        -webkit-transition: -webkit-transform 0.1s ease-in-out;
+        
         -webkit-transform: rotate(-40deg);
+                transform: rotate(-40deg);
 
+        &.with-transition {
+            -webkit-transition: -webkit-transform 0.1s ease-in-out;
+                    transition: transform 0.1s ease-in-out;  
+        }
+        
         .knob-indicator {
             position: absolute;
             left: 47px;
