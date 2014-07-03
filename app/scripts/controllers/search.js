@@ -124,8 +124,9 @@ angular.module('mnemosyneApp')
 
         knobPositionDegree = - 60 + (20 * $scope.requestDepth);
         knobElement.css({
-            "-webkit-transform": "rotate(" + knobPositionDegree + "deg)"
-        })
+            "-webkit-transform": "rotate(" + knobPositionDegree + "deg)",
+            "transform": "rotate(" + knobPositionDegree + "deg)"
+        });
     };
 
     $scope.displayResult = function() {
@@ -146,8 +147,12 @@ angular.module('mnemosyneApp')
             // Timeout needed for the knob element to be available
             setTimeout( function() {
                 $scope.displaySearchDepth();
-            }, 100);
+            }, 10);
         }
+
+        setTimeout( function() {
+            $('.knob').addClass('with-transition');
+        }, 100);
     });
 
   });
