@@ -244,76 +244,78 @@ angular.module('mnemosyneApp')
             }
         };
 
-        socket.on('controlstation', function(data) {
+        if(socket.io) {
+            socket.on('controlstation', function(data) {
 
-            if (data === 6000) {
-                return $scope.standardButtonClick({
-                    srcElement: document.querySelector('.share')
-                });
-            } else if (data === 7000) {
-                if ($('.meta-view').length === 0) {
-                    return $scope.openMetaView();
-                }
-
-                return $location.path('/search');
-
-            } else if (data === 8000) {
-                $scope.searchButtonClick({
-                    srcElement: document.querySelector('.restart')
-                });
-                return $scope.standardButtonClick({
-                    srcElement: document.querySelector('.restart')
-                });
-            }
-
-            /**
-             * if search and random overlays are open dont modify encode
-             */
-            if ($('#search-overlay:visible').hasClass('hidden') === false) {
-                if ($scope.lastValue > data) {
-                    $scope.encoderValue--;
-                } else {
-                    $scope.encoderValue++;
-                }
-
-                if (Math.abs($scope.encoderValue) >= 50) {
-                    if ($scope.encoderValue < 0) {
-                        $scope.toggleSwitch(-1);
-                        $scope.encoderValue = -50;
-                    } else {
-                        $scope.toggleSwitch(1);
-                        $scope.encoderValue = 50;
+                if (data === 6000) {
+                    return $scope.standardButtonClick({
+                        srcElement: document.querySelector('.share')
+                    });
+                } else if (data === 7000) {
+                    if ($('.meta-view').length === 0) {
+                        return $scope.openMetaView();
                     }
-                }
 
-                /**
-                 * when encoder click was fired
-                 */
-                if (data === 9000) {
+                    return $location.path('/search');
+
+                } else if (data === 8000) {
                     $scope.searchButtonClick({
+                        srcElement: document.querySelector('.restart')
+                    });
+                    return $scope.standardButtonClick({
                         srcElement: document.querySelector('.restart')
                     });
                 }
 
-                return $scope.lastValue = data;
-            } else {
+                /**
+                 * if search and random overlays are open dont modify encode
+                 */
+                if ($('#search-overlay:visible').hasClass('hidden') === false) {
+                    if ($scope.lastValue > data) {
+                        $scope.encoderValue--;
+                    } else {
+                        $scope.encoderValue++;
+                    }
 
-                if (data >= -210 && data <= -150) {
-                    $scope.requestDepth = 1;
-                } else if (data >= -149 && data <= -100) {
-                    $scope.requestDepth = 2;
-                } else if (data >= -99 && data <= -50) {
-                    $scope.requestDepth = 3;
-                } else if (data >= -49 && data <= 0) {
-                    $scope.requestDepth = 4;
-                } else if (data > 0 && data <= 50) {
-                    $scope.requestDepth = 5;
+                    if (Math.abs($scope.encoderValue) >= 50) {
+                        if ($scope.encoderValue < 0) {
+                            $scope.toggleSwitch(-1);
+                            $scope.encoderValue = -50;
+                        } else {
+                            $scope.toggleSwitch(1);
+                            $scope.encoderValue = 50;
+                        }
+                    }
+
+                    /**
+                     * when encoder click was fired
+                     */
+                    if (data === 9000) {
+                        $scope.searchButtonClick({
+                            srcElement: document.querySelector('.restart')
+                        });
+                    }
+
+                    return $scope.lastValue = data;
+                } else {
+
+                    if (data >= -210 && data <= -150) {
+                        $scope.requestDepth = 1;
+                    } else if (data >= -149 && data <= -100) {
+                        $scope.requestDepth = 2;
+                    } else if (data >= -99 && data <= -50) {
+                        $scope.requestDepth = 3;
+                    } else if (data >= -49 && data <= 0) {
+                        $scope.requestDepth = 4;
+                    } else if (data > 0 && data <= 50) {
+                        $scope.requestDepth = 5;
+                    }
+
                 }
 
-            }
+                $scope.displaySearchDepth();
 
-            $scope.displaySearchDepth();
-
-        });
+            });
+        }
 
 });

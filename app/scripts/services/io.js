@@ -7,8 +7,8 @@ angular.module('mnemosyneApp').service('socket', function($rootScope) {
     var self = this,
         registeredChannels = [];
 
-    if (this.socket) {
-        return;
+    if (this.socket || typeof io === 'undefined') {
+        return null;
     }
 
     this.socket = io.connect('http://localhost:8000');
