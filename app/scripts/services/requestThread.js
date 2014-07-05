@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mnemosyneApp').service('RequestThread', function ($http, RequestBuilder, RequestResult, EventSystem, WikiParser) {
+angular.module('mnemosyneApp').service('RequestThread', function ($http, RequestBuilder, RequestResult, EventSystem, WikiParser, DDBRest) {
 
     function RequestThread(startSearchTerm, requestDepth, finishedEvent) {
         console.log("RequestThread constructor");
@@ -32,7 +32,9 @@ angular.module('mnemosyneApp').service('RequestThread', function ($http, Request
             wikiPromise.then(function(data) {
                 console.log("Loaded Toc successfully");
                 console.log(data);
-                self.requestResults[this.requestResults.length - 1].outcome.wiki = data;
+                if (data !== undefined) {
+                    self.requestResults[self.requestResults.length - 1].outcome.wiki = data;
+                }
                 EventSystem.dispatchEvent(self.finishedEvent);
 
             }).catch(function(data) {
@@ -42,18 +44,10 @@ angular.module('mnemosyneApp').service('RequestThread', function ($http, Request
             return;
         }
 
-        $http(
-            RequestBuilder.createRequest(searchTerm)
-        ).
-        success(function(data, status, headers, config) {
-            // Creating the RequestResult object, for easier parsing
-            
+        DDBRest.search(searchTerm).affiliate().place().get(0, 50).then(function(data) {
             var requestResult = new RequestResult(data, searchTerm);
             self.requestResults.push(requestResult);
             self.executeRequest(numberOfRequestsLeft - 1);
-        }).
-        error(function(data, status, headers, config) {
-            console.log("ERROR!");
         });
 
     };

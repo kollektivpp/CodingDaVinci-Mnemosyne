@@ -1,13 +1,13 @@
 <div>
     <div ng-if="outcome.thumbnail !== undefined" class="flexWrapperColumn">
         <img src="{{outcome.thumbnail}}" alt="{{outcome.title}}" class="thumbnail">
-        <p class="person-title">{{outcome.title}}</p>
     </div>
 
-    <div ng-if="outcome.thumbnail === undefined" class="flexWrapperColumn">
+    <div class="flexWrapperColumn">
         <p class="person-title">{{outcome.title}}</p>
-        <p ng-if="outcome.dateOfBirth !== undefined" class="person-birthdate">{{outcome.dateOfBirth}}</p>
-        <p ng-if="outcome.dateOfDeath !== undefined" class="person-deathdate">{{outcome.dateOfDeath}}</p>
+        <p ng-if="outcome.dateOfBirth !== undefined && outcome.dateOfDeath !== undefined">({{outcome.dateOfBirth}} - {{outcome.dateOfDeath}})</p>
+        <p ng-if="outcome.dateOfDeath === undefined && outcome.dateOfBirth !== undefined">* {{outcome.dateOfDeath}}</p>
+        <p ng-if="outcome.dateOfDeath !== undefined && outcome.dateOfBirth === undefined">* {{outcome.dateOfBirth}}</p>
     </div>
 
     <div ng-if="outcome.variantName.length >= 5" class="tagcloud">

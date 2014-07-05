@@ -29,7 +29,7 @@
             .flexWrapperColumn {
                 @include flexbox;
                 @include flex-direction(column);
-                @include align-items(center);
+                @include align-items(flex-start);
                 @include justify-content(center);
 
                 max-height: 100%;
@@ -44,7 +44,7 @@
                     padding: 5px 0 0 0;
 
                     &.person-title {
-                        text-align: center;
+                        text-align: left;
                     }
                     &.person-birthdate,
                     &.person-deathdate {
