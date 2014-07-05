@@ -45,6 +45,7 @@
 
                     &.person-title {
                         text-align: left;
+                        padding: 3px 0 0 0;
                     }
                     &.person-birthdate,
                     &.person-deathdate {
@@ -62,6 +63,9 @@
                         &:before {
                             content: "✟";
                         } 
+                    }
+                    &.node-subtitle {
+                        padding: 1px 0 0 0;
                     }
                 }    
             }

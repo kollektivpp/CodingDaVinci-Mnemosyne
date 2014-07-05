@@ -1,7 +1,10 @@
 {
   "name": "mnemosyne",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "duino": "0.0.9",
+    "socket.io": "0.9.16"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.4.0",

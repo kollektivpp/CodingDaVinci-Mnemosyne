@@ -90,7 +90,7 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 		}
 		else {
 
-			promises.push(this.loadWikiSection(0, pageId, lastObject));
+			promises.push(this.loadWikiSection(0, pageId, result));
 
 			for (var i = 1; i < sections.length; i++) {
 				var current = sections[i];
@@ -115,7 +115,7 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 					}
 
 				} 
-				promises.push(this.loadWikiSection(i, pageId, current));
+				promises.push(this.loadWikiSection(i + 1, pageId, current));
 				lastObject = current;
 			}
 			$q.all(promises).then(function(data) {

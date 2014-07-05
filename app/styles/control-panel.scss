@@ -24,7 +24,7 @@
             -webkit-transform: translate3d(0px, 0px, 0px);
             -webkit-transition: -webkit-transform 0.3s ease-in-out;
             z-index: 0;
-            
+
             &.overlay-left {
                 left: 0px;
 
@@ -44,12 +44,11 @@
 
         .overlay-element {
             background-color: $colorMain;
-            border: $colorBlack solid $widthBorder;  
+            border: $colorBlack solid $widthBorder;
             margin-top: 6px;
             padding: 8px;
             color: $colorBlack;
             max-height: 300px;
-            overflow: scroll;
 
             &.overlay-search-selector {
                 width: 50%;
@@ -177,15 +176,15 @@
         height: 100px;
         border-radius: 50%;
         background-color: $colorBlack;
-        
+
         -webkit-transform: rotate(-40deg);
                 transform: rotate(-40deg);
 
         &.with-transition {
             -webkit-transition: -webkit-transform 0.1s ease-in-out;
-                    transition: transform 0.1s ease-in-out;  
+                    transition: transform 0.1s ease-in-out;
         }
-        
+
         .knob-indicator {
             position: absolute;
             left: 47px;
