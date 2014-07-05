@@ -14,6 +14,13 @@
         height: 100%;
         width: 20%;
 
+        &:hover {
+
+            button.more-button {
+                opacity: 1;
+            }
+        }
+
         .nodeElement {
             position: absolute;
             max-width: 125%;
@@ -74,6 +81,34 @@
                 position: absolute;
                 left: -10px;
                 top: 1px;
+            }
+
+            &.moreIsShown {
+                visibility: hidden;
+
+                // Still showing the ::before element, which shows the search thread's number
+                &::before {
+                    visibility: visible;
+                }
+            }
+        }
+
+        .moreWiki {
+            width: 100%;
+            height: 90%;
+            background-color: $colorMain;
+            border: 4px solid $colorBlack;
+            position: absolute;
+            top: 20px;
+            z-index: 100;
+            font-family: "FiraMono";
+            font-size: 12px;
+            padding: 10px;
+
+            display: none;
+
+            &.moreIsShown {
+                display: block;
             }
         }
 

@@ -9,8 +9,15 @@ angular.module('mnemosyneApp')
     ];  
 
     $scope.requestDepth = (SharedResult.data.length !== 0) ? SharedResult.data[0].requestResults.length : 1;
-    $scope.searchTerm = (SharedResult.data.length !== 0) ? SharedResult.data[0].startSearchTerm : "";
+    $scope.searchTerm = (SharedResult.data.length !== 0) ? SharedResult.data[0].startSearchTerm : "Da Vinci";
     $scope.loadingStopped = true;
+
+    // Sharing functionality
+    $scope.share = {
+        sendTo: "",
+        sendFrom: "",
+        shareAdditionalText: ""
+    };
 
     $scope.triggerSearch = function(event) {
 
@@ -40,6 +47,8 @@ angular.module('mnemosyneApp')
             searchButton = angular.element(document.querySelector('#button-search')),
             allButtons = angular.element(document.querySelectorAll('.standard-button')),
             allOverlays = angular.element(document.querySelectorAll('.standard-overlay'));
+
+        $scope.hideMore();
 
         if (clickedButton[0] !== searchButton[0]) {
             searchButton.html("RESTART");
@@ -138,6 +147,49 @@ angular.module('mnemosyneApp')
         $scope.result4 = NodeFactory.createNodeWithOutcome(SharedResult.data[3].requestResults[requestThreadDepth - 1].outcome);
         $scope.result5 = NodeFactory.createNodeWithOutcome(SharedResult.data[4].requestResults[requestThreadDepth - 1].outcome);
     };
+
+    $scope.showMore = function(event) {
+        var clickedButton = $(event.srcElement),
+            relevantMoreElement = clickedButton.parents('.nodeWrapper').children('.moreWiki'),
+            relevantNodeElement = clickedButton.closest('.nodeElement');
+
+            event.stopPropagation();
+            $scope.hideMore();
+
+            relevantMoreElement.addClass('moreIsShown');
+            relevantNodeElement.addClass('moreIsShown');
+
+
+            $('body').one('click', $scope.hideMore);
+            console.log(relevantMoreElement);
+            console.log(relevantNodeElement);
+
+        console.log(event);
+
+        console.log(arguments[0]);
+        console.log(arguments[1]);
+        console.log(arguments[2]);
+        console.log(arguments[3]);
+    };
+
+    $scope.hideMore = function (event) {
+        var moreElements = $('.moreWiki'),
+            nodeElements = $('.nodeElement');
+
+        moreElements.removeClass('moreIsShown');
+        nodeElements.removeClass('moreIsShown');
+    };
+
+    $scope.sendMail = function() {
+        var newLine = "%0A",
+            content = "Hi," +  newLine + newLine + "check out these search results made with MNEMOSYNE!" + newLine,
+            mailToString = "mailto:" + $scope.share.sendTo + "?subject="
+                        + "My Mnemosyne search" + "&body=" + content
+                        + $scope.share.additionalText + newLine + newLine + "Regards, "
+                        + $scope.share.sendFrom;
+
+        location.href = mailToString;
+    }
 
     $scope.$on('$viewContentLoaded', function() {
         
