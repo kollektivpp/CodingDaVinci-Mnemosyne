@@ -71,3 +71,38 @@ textarea {
 #dummyInput {
     z-index: 10000;
 }
+
+button {
+    @include appearanceReset();
+    font-family: "FiraMono";
+    width: 100px;
+    height: 70px;
+
+    &.back-button,
+    &.more-button {
+        &:active {
+            -webkit-transform: scale3d(0.96,0.96,0.96);
+        }
+    }
+
+    &.back-button {
+        z-index: 1;
+        background-color: $colorMain;
+        color: $colorBlack;
+        border: $widthBorder solid $colorBlack;
+        -webkit-transition: -webkit-transform 0.03s ease-out;
+    }
+
+    &.more-button {
+        position: absolute;
+        top: 0px;
+        left: 10px;
+        z-index: 1;
+        background-color: $colorMain;
+        color: $colorBlack;
+        border: $widthBorder solid $colorBlack;
+        -webkit-transition: -webkit-transform 0.03s ease-out, opacity 0.05s linear;
+        opacity: 0;
+
+    }
+}

@@ -1,4 +1,6 @@
-<div class="nodeElement" ng-if="outcome.type">
+<div class="nodeElement" ng-if="outcome.type" ng-controller="SearchCtrl">
+
+    <button class="more-button standardButton" ng-click="showMore($event)">MORE</button>
 
      <div ng-if="outcome.type === 'PERSON'" class="flexWrapperColumn">
         <node-person></node-person>

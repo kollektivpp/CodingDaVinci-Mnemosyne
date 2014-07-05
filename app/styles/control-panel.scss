@@ -153,6 +153,10 @@
         color: $colorBlack;
         font-family: "FiraMono";
         font-size: 13px;
+
+        &.input-share {
+            width: 270px;
+        }
     }
 
     textarea {
