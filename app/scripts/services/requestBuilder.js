@@ -26,10 +26,10 @@ angular.module('mnemosyneApp').service('RequestBuilder', function ($http) {
         
     };
 
-    this.getWikipediaTOC = function(name) {
+    this.getWikipediaTOC = function(pageid) {
         return {
             method: 'GET',
-            url: 'http://de.wikipedia.org/w/api.php?action=parse&prop=sections&format=json&page=' + name,
+            url: 'http://de.wikipedia.org/w/api.php?action=parse&prop=sections&format=json&page=' + pageid,
              headers: {
                  'Content-Type' : 'application/json;charset=UTF-8',
                  'Access-Control-Allow-Origin': 'http://localhost',
@@ -37,4 +37,18 @@ angular.module('mnemosyneApp').service('RequestBuilder', function ($http) {
              }
         };
     };
+
+    this.searchWikipedia = function(name) {
+        name = name.split(' ').join('%20');
+        console.log(name);
+        return {
+            method: 'GET',
+            url: 'http://de.wikipedia.org/w/api.php?action=query&titles=' + name + '&indexpageids&format=json',
+            headers: {
+                 'Content-Type' : 'application/json;charset=UTF-8',
+                 'Access-Control-Allow-Origin': 'http://localhost',
+                 'test' : 'test'
+             }
+        };
+    }
 });
