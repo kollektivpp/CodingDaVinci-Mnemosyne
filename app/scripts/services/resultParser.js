@@ -12,6 +12,8 @@ angular.module('mnemosyneApp').service('ResultParser', function ($http, RequestB
         resultObject.randomNumber = Math.floor(Math.random() * 100);
         console.log("result.randomNumber: " + resultObject.randomNumber);
 
+
+
         switch ((1000 * resultObject.randomNumber) * Math.floor(Math.random() * 100) % 3) {
             // entities (Persons)
             case 0:
@@ -47,8 +49,9 @@ angular.module('mnemosyneApp').service('ResultParser', function ($http, RequestB
                 console.log("DEAD END");
                 // TODO: WHAT HAPPENS HERE?! CAN WE AVOID THIS CASE? IF YES, HOW?
                 // MAYBE BY CHANGING THE SWITCH CASE ORDER? WHICH TYPE IS THE MOST LIKELY TO BE ALWAYS THERE IN A RESPONSE???
-                resultObject.type = "UNDEFINED";
-                resultObject.title = "Sackgasse";
+                
+                return this.parseFacetOutcome(resultObject);
+
         }
 
         return resultObject;
@@ -114,7 +117,9 @@ angular.module('mnemosyneApp').service('ResultParser', function ($http, RequestB
             resultObject.mediatype = docData.media;
 
         }
-        resultObject.image = RequestBuilder.getThumbnailUrl(resultObject.thumbnail);
+        if (resultObject.thumbnail !== undefined) {
+            resultObject.image = RequestBuilder.getThumbnailUrl(resultObject.thumbnail);
+        }
 
         return resultObject;
     }
