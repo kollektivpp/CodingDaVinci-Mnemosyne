@@ -146,6 +146,13 @@ angular.module('mnemosyneApp')
         $scope.result3 = NodeFactory.createNodeWithOutcome(SharedResult.data[2].requestResults[requestThreadDepth - 1].outcome);
         $scope.result4 = NodeFactory.createNodeWithOutcome(SharedResult.data[3].requestResults[requestThreadDepth - 1].outcome);
         $scope.result5 = NodeFactory.createNodeWithOutcome(SharedResult.data[4].requestResults[requestThreadDepth - 1].outcome);
+
+        console.log("THE FINAL OUTCOME OBJECTS");
+        console.log($scope.result1);
+        console.log($scope.result2);
+        console.log($scope.result3);
+        console.log($scope.result4);
+        console.log($scope.result5);
     };
 
     $scope.showMore = function(event) {

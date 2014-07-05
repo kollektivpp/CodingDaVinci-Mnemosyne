@@ -1,1 +1,15 @@
-<div class="moreWiki"></div>
+<div class="moreWiki">
+    <div ng-if="outcome.wiki">
+        <div ng-repeat="section in outcome.wiki.content">
+            <h4>{{section.line}}</h4>
+            <p>{{section.html}}</p>
+            <div ng-repeat="innerSection in section.content">
+                <h5>{{innerSection.line}}</h5>
+                <p class="innerWiki">{{innerSection.html}}</p>
+            </div>
+        </div>
+    </div>
+    <div ng-if="outcome.wiki === undefined">
+        <p>No further data found.</p>
+    </div>
+</div>
