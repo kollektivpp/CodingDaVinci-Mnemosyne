@@ -1,13 +1,14 @@
 <div>
-    <div ng-if="outcome.thumbnail !== undefined" class="flexWrapperColumn">
+    <!--<div ng-if="outcome.thumbnail !== undefined" class="flexWrapperColumn">
         <img src="{{outcome.thumbnail}}" alt="{{outcome.title}}" class="thumbnail">
-        <p class="person-title">{{outcome.title}}</p>
-    </div>
+    </div>-->
 
-    <div ng-if="outcome.thumbnail === undefined" class="flexWrapperColumn">
+    <div class="flexWrapperColumn">
+        <img ng-if="outcome.thumbnail !== undefined" src="{{outcome.thumbnail}}" alt="{{outcome.title}}" class="thumbnail" />
         <p class="person-title">{{outcome.title}}</p>
-        <p ng-if="outcome.dateOfBirth !== undefined" class="person-birthdate">{{outcome.dateOfBirth}}</p>
-        <p ng-if="outcome.dateOfDeath !== undefined" class="person-deathdate">{{outcome.dateOfDeath}}</p>
+        <p ng-if="outcome.dateOfBirth !== undefined && outcome.dateOfDeath !== undefined" class="node-subtitle">({{outcome.dateOfBirth}} - {{outcome.dateOfDeath}})</p>
+        <p ng-if="outcome.dateOfDeath === undefined && outcome.dateOfBirth !== undefined" class="node-subtitle">* {{outcome.dateOfDeath}}</p>
+        <p ng-if="outcome.dateOfDeath !== undefined && outcome.dateOfBirth === undefined" class="node-subtitle">* {{outcome.dateOfBirth}}</p>
     </div>
 
     <div ng-if="outcome.variantName.length >= 5" class="tagcloud">

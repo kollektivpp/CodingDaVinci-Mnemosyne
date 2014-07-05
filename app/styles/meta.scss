@@ -70,8 +70,8 @@
             .meta-thread {
                 @include flexbox;
                 @include flex-direction(row);
-                @include align-items(center);
-                @include justify-content(center);
+                @include align-items(left);
+                @include justify-content(left);
 
                 width: 50%;
                 height: 100%;
@@ -132,25 +132,6 @@
 
 
             }    
-        }
-    }
-
-    button {
-        @include appearanceReset();
-        font-family: "FiraMono";
-        width: 100px;
-        height: 70px;
-
-        &.back-button {
-            z-index: 1;
-            background-color: $colorMain;
-            color: $colorBlack;
-            border: $widthBorder solid $colorBlack;
-            -webkit-transition: -webkit-transform 0.03s ease-out;
-
-            &:active {
-                -webkit-transform: scale3d(0.96,0.96,0.96);
-            }
         }
     }
 }

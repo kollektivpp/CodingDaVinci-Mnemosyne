@@ -2,133 +2,166 @@
 
 angular.module('mnemosyneApp')
     .controller('SearchCtrl', function($scope, $http, $compile, $location, SharedResult, MnemosyneRequest, EventSystem, NodeFactory, socket) {
-        $scope.awesomeThings = [
-            'HTML5 Boilerplate',
-            'AngularJS',
-            'Karma'
-        ];
+            $scope.awesomeThings = [
+                'HTML5 Boilerplate',
+                'AngularJS',
+                'Karma'
+            ];
 
-        $scope.requestDepth = (SharedResult.data.length !== 0) ? SharedResult.data[0].requestResults.length : 1;
-        $scope.searchTerm = (SharedResult.data.length !== 0) ? SharedResult.data[0].startSearchTerm : "";
-        $scope.loadingStopped = true;
-        $scope.encoderValue = 0;
-        $scope.lastValue = 0;
+            $scope.requestDepth = (SharedResult.data.length !== 0) ? SharedResult.data[0].requestResults.length : 1;
+            $scope.searchTerm = (SharedResult.data.length !== 0) ? SharedResult.data[0].startSearchTerm : "";
+            $scope.loadingStopped = true;
+            $scope.encoderValue = 0;
+            $scope.lastValue = 0;
 
-        $scope.triggerSearch = function(event) {
+            // Sharing functionality
+            $scope.share = {
+                sendTo: "",
+                sendFrom: "",
+                shareAdditionalText: ""
+            };
 
-            var searchString = angular.element(document.querySelector('.overlay-search-selector input')).val();
-            //TODO: Implement random search
+            $scope.triggerSearch = function(event) {
 
-            // Starting the Mnemosyne request:
-            var request = new MnemosyneRequest(searchString, angular.copy($scope.requestDepth), function(result) {
-                SharedResult.data = result;
-                $scope.displayResult();
-                $scope.loadingStopped = true;
-            });
+                var searchString = angular.element(document.querySelector('.overlay-search-selector input')).val();
+                //TODO: Implement random search
 
-            $scope.result1 = {};
-            $scope.result2 = {};
-            $scope.result3 = {};
-            $scope.result4 = {};
-            $scope.result5 = {};
+                // Starting the Mnemosyne request:
+                var request = new MnemosyneRequest(searchString, angular.copy($scope.requestDepth), function(result) {
+                    SharedResult.data = result;
+                    $scope.displayResult();
+                    $scope.loadingStopped = true;
+                });
 
-            request.startSearch();
-            $scope.loadingStopped = false;
-        };
+                $scope.result1 = {};
+                $scope.result2 = {};
+                $scope.result3 = {};
+                $scope.result4 = {};
+                $scope.result5 = {};
 
-        $scope.standardButtonClick = function(event) {
+                request.startSearch();
+                $scope.loadingStopped = false;
+            };
 
-            var clickedButton = angular.element(event.srcElement),
-                overlay = clickedButton.next(),
-                allButtons = angular.element(document.querySelectorAll('.standard-button')),
-                allOverlays = angular.element(document.querySelectorAll('.standard-overlay'));
+            $scope.standardButtonClick = function(event) {
 
-            if (clickedButton.hasClass('active')) {
-                clickedButton.removeClass('active');
-                overlay.addClass('hidden');
-            } else {
-                allButtons.removeClass('active');
-                allOverlays.addClass('hidden');
+                var clickedButton = angular.element(event.srcElement),
+                    overlay = clickedButton.next(),
+                    allButtons = angular.element(document.querySelectorAll('.standard-button')),
+                    allOverlays = angular.element(document.querySelectorAll('.standard-overlay'));
 
-                clickedButton.addClass('active');
-                overlay.removeClass('hidden');
-            }
-        };
-
-        $scope.searchButtonClick = function() {
-            var searchButton = $('#button-search'),
-                overlay = $('#search-overlay');
-
-            if (searchButton.hasClass('active')) {
-
-                if($('.searchTerm').val() !== '') {
-                    $('.searchTerm').val('');
-                    $scope.triggerSearch();
-                }
-
-                searchButton.html("RESTART");
-            } else {
-                searchButton.html("GO");
-                $('.random-search-overlay').removeClass('selected');
-                $('.search-search-overlay').addClass('selected');
-                $('.searchTerm').focus();
-            }
-        };
-
-        $scope.openMetaView = function() {
-            $location.path('/meta');
-        };
-
-        $scope.selectSearchStyle = function(event) {
-            var searchStyleElements = angular.element(document.querySelectorAll('.overlay-search-selector')),
-                clickedElement = (angular.element(event.srcElement).hasClass('.overlay-search-selector')) ? angular.element(event.srcElement) : angular.element(event.srcElement).parent(),
-                searchButton = angular.element(document.querySelector('#button-search'));
-
-            if (clickedElement.hasClass('selected')) {
-                clickedElement.removeClass('selected');
-                searchButton.html("RESTART");
-            } else {
-                searchStyleElements.removeClass('selected');
-                clickedElement.addClass('selected');
-                searchButton.html("GO");
-                $('.searchTerm').focus();
-            }
-        };
-
-        $scope.increaseSearchDepth = function() {
-            $scope.requestDepth = Math.min(5, $scope.requestDepth + 1);
-            $scope.displaySearchDepth();
-        };
-
-        $scope.decreaseSearchDepth = function() {
-            $scope.requestDepth = Math.max(1, $scope.requestDepth - 1);
-            $scope.displaySearchDepth();
-        };
-
-        $scope.displaySearchDepth = function() {
-            var depthIndicatorSteps = angular.element(document.querySelectorAll('.depth-indicator-step')),
-                knobElement = angular.element(document.querySelector('.knob')),
-                knobPositionDegree,
-                singleStep,
-                i,
-                length = 5;
-
-            for (i = 0; i < length; i++) {
-                singleStep = angular.element(depthIndicatorSteps[i]);
-
-                if (i <= $scope.requestDepth - 1) {
-                    singleStep.addClass('active');
+                if (clickedButton.hasClass('active')) {
+                    clickedButton.removeClass('active');
+                    overlay.addClass('hidden');
                 } else {
-                    singleStep.removeClass('active');
-                }
-            }
+                    allButtons.removeClass('active');
+                    allOverlays.addClass('hidden');
 
-            knobPositionDegree = -60 + (20 * $scope.requestDepth);
-            knobElement.css({
-                "-webkit-transform": "rotate(" + knobPositionDegree + "deg)",
-                "transform": "rotate(" + knobPositionDegree + "deg)"
+                    clickedButton.addClass('active');
+                    overlay.removeClass('hidden');
+                }
+            };
+
+            $scope.searchButtonClick = function() {
+                var searchButton = $('#button-search'),
+                    overlay = $('#search-overlay');
+
+                if (searchButton.hasClass('active')) {
+
+                    if ($('.searchTerm').val() !== '') {
+                        $('.searchTerm').val('');
+                        $scope.triggerSearch();
+                    }
+
+                    searchButton.html("RESTART");
+                } else {
+                    searchButton.html("GO");
+                    $('.random-search-overlay').removeClass('selected');
+                    $('.search-search-overlay').addClass('selected');
+                    $('.searchTerm').focus();
+                }
+            };
+
+            $scope.openMetaView = function() {
+                $location.path('/meta');
+            };
+
+            $scope.selectSearchStyle = function(event) {
+                var searchStyleElements = angular.element(document.querySelectorAll('.overlay-search-selector')),
+                    clickedElement = (angular.element(event.srcElement).hasClass('.overlay-search-selector')) ? angular.element(event.srcElement) : angular.element(event.srcElement).parent(),
+                    searchButton = angular.element(document.querySelector('#button-search'));
+
+                if (clickedElement.hasClass('selected')) {
+                    clickedElement.removeClass('selected');
+                    searchButton.html("RESTART");
+                } else {
+                    searchStyleElements.removeClass('selected');
+                    clickedElement.addClass('selected');
+                    searchButton.html("GO");
+                    $('.searchTerm').focus();
+                }
+            };
+
+            $scope.increaseSearchDepth = function() {
+                $scope.requestDepth = Math.min(5, $scope.requestDepth + 1);
+                $scope.displaySearchDepth();
+            };
+
+            $scope.decreaseSearchDepth = function() {
+                $scope.requestDepth = Math.max(1, $scope.requestDepth - 1);
+                $scope.displaySearchDepth();
+            };
+
+            $scope.displaySearchDepth = function() {
+                var depthIndicatorSteps = angular.element(document.querySelectorAll('.depth-indicator-step')),
+                    knobElement = angular.element(document.querySelector('.knob')),
+                    knobPositionDegree,
+                    singleStep,
+                    i,
+                    length = 5;
+
+                for (i = 0; i < length; i++) {
+                    singleStep = angular.element(depthIndicatorSteps[i]);
+
+                    if (i <= $scope.requestDepth - 1) {
+                        singleStep.addClass('active');
+                    } else {
+                        singleStep.removeClass('active');
+                    }
+                }
+
+                knobPositionDegree = -60 + (20 * $scope.requestDepth);
+                knobElement.css({
+                    "-webkit-transform": "rotate(" + knobPositionDegree + "deg)",
+                    "transform": "rotate(" + knobPositionDegree + "deg)"
+                });
+            };
+
+            $scope.displayResult = function() {
+                var requestThreadDepth = SharedResult.data[0].requestResults.length;
+
+                $scope.result1 = NodeFactory.createNodeWithOutcome(SharedResult.data[0].requestResults[requestThreadDepth - 1].outcome);
+                $scope.result2 = NodeFactory.createNodeWithOutcome(SharedResult.data[1].requestResults[requestThreadDepth - 1].outcome);
+                $scope.result3 = NodeFactory.createNodeWithOutcome(SharedResult.data[2].requestResults[requestThreadDepth - 1].outcome);
+                $scope.result4 = NodeFactory.createNodeWithOutcome(SharedResult.data[3].requestResults[requestThreadDepth - 1].outcome);
+                $scope.result5 = NodeFactory.createNodeWithOutcome(SharedResult.data[4].requestResults[requestThreadDepth - 1].outcome);
+            };
+
+            $scope.$on('$viewContentLoaded', function() {
+
+                if (SharedResult.data.length !== 0) {
+                    $scope.displayResult();
+
+                    // Timeout needed for the knob element to be available
+                    setTimeout(function() {
+                        $scope.displaySearchDepth();
+                    }, 10);
+                }
+
+                setTimeout(function() {
+                    $('.knob').addClass('with-transition');
+                }, 100);
             });
-        };
 
         $scope.displayResult = function() {
             var requestThreadDepth = SharedResult.data[0].requestResults.length;
@@ -139,6 +172,46 @@ angular.module('mnemosyneApp')
             $scope.result4 = NodeFactory.createNodeWithOutcome(SharedResult.data[3].requestResults[requestThreadDepth - 1].outcome);
             $scope.result5 = NodeFactory.createNodeWithOutcome(SharedResult.data[4].requestResults[requestThreadDepth - 1].outcome);
         };
+
+        $scope.showMore = function(event) {
+            var clickedButton = $(event.srcElement),
+                relevantMoreElement = clickedButton.parents('.nodeWrapper').children('.moreWiki'),
+                relevantNodeElement = clickedButton.closest('.nodeElement');
+
+            event.stopPropagation();
+            $scope.hideMore();
+
+            relevantMoreElement.addClass('moreIsShown');
+            relevantNodeElement.addClass('moreIsShown');
+
+
+            $('body').one('click', $scope.hideMore);
+            console.log(relevantMoreElement);
+            console.log(relevantNodeElement);
+
+            console.log(event);
+
+            console.log(arguments[0]);
+            console.log(arguments[1]);
+            console.log(arguments[2]);
+            console.log(arguments[3]);
+        };
+
+        $scope.hideMore = function(event) {
+            var moreElements = $('.moreWiki'),
+                nodeElements = $('.nodeElement');
+
+            moreElements.removeClass('moreIsShown');
+            nodeElements.removeClass('moreIsShown');
+        };
+
+        $scope.sendMail = function() {
+            var newLine = "%0A",
+                content = "Hi," + newLine + newLine + "check out these search results made with MNEMOSYNE!" + newLine,
+                mailToString = "mailto:" + $scope.share.sendTo + "?subject=" + "My Mnemosyne search" + "&body=" + content + $scope.share.additionalText + newLine + newLine + "Regards, " + $scope.share.sendFrom;
+
+            location.href = mailToString;
+        }
 
         $scope.$on('$viewContentLoaded', function() {
 
@@ -178,21 +251,25 @@ angular.module('mnemosyneApp')
                     srcElement: document.querySelector('.share')
                 });
             } else if (data === 7000) {
-                if($('.meta-view').length === 0) {
+                if ($('.meta-view').length === 0) {
                     return $scope.openMetaView();
                 }
 
                 return $location.path('/search');
 
             } else if (data === 8000) {
-                $scope.searchButtonClick({ srcElement: document.querySelector('.restart') });
-                return $scope.standardButtonClick({ srcElement: document.querySelector('.restart') });
+                $scope.searchButtonClick({
+                    srcElement: document.querySelector('.restart')
+                });
+                return $scope.standardButtonClick({
+                    srcElement: document.querySelector('.restart')
+                });
             }
 
             /**
              * if search and random overlays are open dont modify encode
              */
-            if($('#search-overlay:visible').hasClass('hidden') === false) {
+            if ($('#search-overlay:visible').hasClass('hidden') === false) {
                 if ($scope.lastValue > data) {
                     $scope.encoderValue--;
                 } else {
@@ -212,7 +289,7 @@ angular.module('mnemosyneApp')
                 /**
                  * when encoder click was fired
                  */
-                if(data === 9000) {
+                if (data === 9000) {
                     $scope.searchButtonClick({
                         srcElement: document.querySelector('.restart')
                     });
@@ -239,4 +316,4 @@ angular.module('mnemosyneApp')
 
         });
 
-    });
+});

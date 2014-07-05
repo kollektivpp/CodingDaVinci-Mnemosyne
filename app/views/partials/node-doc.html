@@ -1,6 +1,4 @@
-<div>
-	<p>{{outcome.title}}</p>
-	<div g-if="outcome.image !== undefined">
-		<image src="{{outcome.image}}" />
-	</div>
+<div class="flexWrapperColumn">
+	<image g-if="outcome.image !== undefined" src="{{outcome.image}}" />
+	<p class="person-title">{{outcome.title}}</p>
 </div>
