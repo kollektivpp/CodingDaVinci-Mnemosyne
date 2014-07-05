@@ -78,6 +78,10 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 		console.log(rawData.parse.sections);
 		console.log(lastObject);
 
+		if (lastObject === undefined) {
+			deferred.reject("No Sections");
+		}
+
 		promises.push(this.loadWikiSection(0, pageId, lastObject));
 
 		for (var i = 1; i < sections.length; i++) {

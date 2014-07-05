@@ -32,7 +32,9 @@ angular.module('mnemosyneApp').service('RequestThread', function ($http, Request
             wikiPromise.then(function(data) {
                 console.log("Loaded Toc successfully");
                 console.log(data);
-                self.requestResults[this.requestResults.length - 1].outcome.wiki = data;
+                if (data !== undefined) {
+                    self.requestResults[self.requestResults.length - 1].outcome.wiki = data;
+                }
                 EventSystem.dispatchEvent(self.finishedEvent);
 
             }).catch(function(data) {
