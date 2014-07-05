@@ -24,5 +24,17 @@ angular.module('mnemosyneApp').service('RequestBuilder', function ($http) {
     this.getThumbnailUrl = function(path) {
         return 'http://api.deutsche-digitale-bibliothek.de' + path + '?' + oAuthKey;
         
-    }
+    };
+
+    this.getWikipediaTOC = function(name) {
+        return {
+            method: 'GET',
+            url: 'http://de.wikipedia.org/w/api.php?action=parse&prop=sections&format=json&page=' + name,
+             headers: {
+                 'Content-Type' : 'application/json;charset=UTF-8',
+                 'Access-Control-Allow-Origin': 'http://localhost',
+                 'test' : 'test'
+             }
+        };
+    };
 });

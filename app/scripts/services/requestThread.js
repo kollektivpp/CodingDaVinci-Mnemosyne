@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mnemosyneApp').service('RequestThread', function ($http, RequestBuilder, RequestResult, EventSystem) {
+angular.module('mnemosyneApp').service('RequestThread', function ($http, RequestBuilder, RequestResult, EventSystem, WikiParser) {
 
     function RequestThread(startSearchTerm, requestDepth, finishedEvent) {
         console.log("RequestThread constructor");
@@ -23,9 +23,29 @@ angular.module('mnemosyneApp').service('RequestThread', function ($http, Request
                         (this.requestResults[this.requestResults.length - 1]).getNextSearchTerm(),
             self = this;
 
+
         if (numberOfRequestsLeft <= 0) {
             console.log('All requests have finished');
-            EventSystem.dispatchEvent(this.finishedEvent);
+            if (this.requestResults[this.requestResults.length - 1].outcome.type === "PERSON") {
+                $http(
+                    RequestBuilder.getWikipediaTOC("Leonardo_da_Vinci")
+                ).
+                success(function(data, status, headers, config) {
+                    console.log("LOADED TOC");
+                    console.log(data);
+                    console.log(WikiParser.parseToc(data));
+                    EventSystem.dispatchEvent(self.finishedEvent);
+
+                }).
+                error(function(data, status, headers, config) {
+                    console.log("ERROR LOADING TOC");
+                    EventSystem.dispatchEvent(self.finishedEvent);
+                });
+            }
+            else {
+                EventSystem.dispatchEvent(self.finishedEvent);
+            }
+            
             return;
         }
 
@@ -34,7 +54,9 @@ angular.module('mnemosyneApp').service('RequestThread', function ($http, Request
         ).
         success(function(data, status, headers, config) {
             // Creating the RequestResult object, for easier parsing
-            self.requestResults.push(new RequestResult(data, searchTerm));
+            
+            var requestResult = new RequestResult(data, searchTerm);
+            self.requestResults.push(requestResult);
             self.executeRequest(numberOfRequestsLeft - 1);
         }).
         error(function(data, status, headers, config) {
