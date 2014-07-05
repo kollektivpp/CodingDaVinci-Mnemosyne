@@ -29,7 +29,7 @@ angular.module('mnemosyneApp').service('RequestBuilder', function ($http) {
     this.getWikipediaTOC = function(pageid) {
         return {
             method: 'GET',
-            url: 'http://de.wikipedia.org/w/api.php?action=parse&prop=sections&format=json&page=' + pageid,
+            url: 'http://de.wikipedia.org/w/api.php?action=parse&prop=sections&format=json&pageid=' + pageid,
              headers: {
                  'Content-Type' : 'application/json;charset=UTF-8',
                  'Access-Control-Allow-Origin': 'http://localhost',
@@ -44,6 +44,18 @@ angular.module('mnemosyneApp').service('RequestBuilder', function ($http) {
         return {
             method: 'GET',
             url: 'http://de.wikipedia.org/w/api.php?action=query&titles=' + name + '&indexpageids&format=json',
+            headers: {
+                 'Content-Type' : 'application/json;charset=UTF-8',
+                 'Access-Control-Allow-Origin': 'http://localhost',
+                 'test' : 'test'
+             }
+        };
+    }
+
+    this.getWikipediaSection = function(pageId, sectionId) {
+        return {
+            method: 'GET',
+            url: 'http://de.wikipedia.org/w/api.php?action=parse&pageid=' + pageId + '&format=json&prop=text&section=' + sectionId,
             headers: {
                  'Content-Type' : 'application/json;charset=UTF-8',
                  'Access-Control-Allow-Origin': 'http://localhost',
