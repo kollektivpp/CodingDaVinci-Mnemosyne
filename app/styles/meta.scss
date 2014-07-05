@@ -70,8 +70,8 @@
             .meta-thread {
                 @include flexbox;
                 @include flex-direction(row);
-                @include align-items(center);
-                @include justify-content(center);
+                @include align-items(left);
+                @include justify-content(left);
 
                 width: 50%;
                 height: 100%;
