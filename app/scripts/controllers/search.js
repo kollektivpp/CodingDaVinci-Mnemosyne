@@ -7,12 +7,14 @@ angular.module('mnemosyneApp')
                 'AngularJS',
                 'Karma'
             ];
-
+            $scope.searchTerm = {};
             $scope.requestDepth = (SharedResult.data.length !== 0) ? SharedResult.data[0].requestResults.length : 1;
-            $scope.searchTerm = (SharedResult.data.length !== 0) ? SharedResult.data[0].startSearchTerm : "";
+            $scope.searchTerm.value = (SharedResult.data.length !== 0) ? SharedResult.data[0].startSearchTerm : "";
             $scope.loadingStopped = true;
             $scope.encoderValue = 0;
             $scope.lastValue = 0;
+
+            console.log("initialized searchterm");
 
             // Sharing functionality
             $scope.share = {
@@ -24,6 +26,7 @@ angular.module('mnemosyneApp')
             $scope.triggerSearch = function(event) {
 
                 var searchString = angular.element(document.querySelector('.overlay-search-selector input')).val();
+                console.log("Searchstring:" + searchString);
                 //TODO: Implement random search
 
                 // Starting the Mnemosyne request:
@@ -69,7 +72,7 @@ angular.module('mnemosyneApp')
                 if (searchButton.hasClass('active')) {
 
                     if ($('.searchTerm').val() !== '') {
-                        $('.searchTerm').val('');
+                        $scope.searchTerm.value = '';
                         $scope.triggerSearch();
                     }
 
@@ -86,10 +89,18 @@ angular.module('mnemosyneApp')
                 $location.path('/meta');
             };
 
+            $scope.randomSearchString = function() {
+                var strings = ["Thomas", "Fussball", "Dinosaurier", "Achim", "USA", "Deutschland", "Merkel", "Jazz", "Schrank", "Zimmer"];
+                return strings[Math.floor(Math.random() * strings.length)];
+            }
+
             $scope.selectSearchStyle = function(event) {
                 var searchStyleElements = angular.element(document.querySelectorAll('.overlay-search-selector')),
                     clickedElement = (angular.element(event.srcElement).hasClass('.overlay-search-selector')) ? angular.element(event.srcElement) : angular.element(event.srcElement).parent(),
                     searchButton = angular.element(document.querySelector('#button-search'));
+                if (clickedElement.hasClass('random-search-overlay')) {
+                    $scope.searchTerm.value = $scope.randomSearchString();
+                }
 
                 if (clickedElement.hasClass('selected')) {
                     clickedElement.removeClass('selected');

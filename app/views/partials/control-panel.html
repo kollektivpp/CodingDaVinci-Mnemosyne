@@ -4,10 +4,10 @@
             <button id="button-search" class="standard-button restart" ng-click="searchButtonClick($event); standardButtonClick($event);">RESTART</button>
             <div id="search-overlay" class="standard-overlay overlay-right overlay-group-row hidden">
                 <div class="overlay-element overlay-search-selector random-search-overlay" ng-click="selectSearchStyle($event)">
-                    <div>START RANDOM SEARCH</div>
+                    <div >START RANDOM SEARCH</div>
                 </div>
                 <div class="overlay-element overlay-search-selector search-search-overlay" ng-click="selectSearchStyle($event)">
-                    <input ng-model="searchTerm" type="text" class="searchTerm" placeholder="TYPE A WORD" value="{{searchTerm}}">
+                    <input ng-model="searchTerm.value" type="text" class="searchTerm" placeholder="TYPE A WORD" value="{{searchTerm.value}}">
                 </div>
             </div>
         </div>
