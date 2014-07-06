@@ -20,6 +20,7 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 	            if (data.query.pageids[0] != -1) {
 	                console.log("TRIGGER TOC SEARCH");
 	                pageId = data.query.pageids[0];
+
 	                $http(
 	                    RequestBuilder.getWikipediaTOC(pageId)
 	                ).
@@ -83,6 +84,8 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 		console.log("TOC");
 		console.log(rawData.parse.sections);
 		console.log(lastObject);
+
+		result.title = rawData.parse.title;
 
 		if (lastObject === undefined) {
 			console.log("No Section");
