@@ -15,6 +15,7 @@ angular.module('mnemosyneApp')
             $scope.lastValue = 0;
 
             $scope.lastMore = -1;
+            $scope.shareActivated = false;
 
             console.log("initialized searchterm");
 
@@ -295,6 +296,8 @@ angular.module('mnemosyneApp')
                 }
 
                 if (data === 6000) {
+                    $scope.shareActivated = !$scope.shareActivated;
+                    console.log("Activated: " + $scope.shareActivated);
                     return $scope.standardButtonClick({
                         srcElement: document.querySelector('.share')
                     });
@@ -344,7 +347,24 @@ angular.module('mnemosyneApp')
                     }
 
                     return $scope.lastValue = data;
-                } else {
+                } else if ($scope.shareActivated) {
+                    var inputs = document.getElementById("share-overlay").children;
+                    console.log(inputs);
+                    if (data >= -210 && data <= -150) {
+                        console.log("first focus");
+                        inputs[0].focus();
+                    } else if (data >= -149 && data <= -100) {
+                        console.log("second focus");
+                        inputs[1].focus();
+                    } else if (data >= -99 && data <= -50) {
+                        console.log("third focus");
+                        inputs[2].focus();
+                    } else if (data >= -49) {
+                        console.log("fourth focus");
+                        inputs[3].focus();
+                    }
+                }   
+                else {
 
                     if (data >= -210 && data <= -150) {
                         $scope.requestDepth = 1;
