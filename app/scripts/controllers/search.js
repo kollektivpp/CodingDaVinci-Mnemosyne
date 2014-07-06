@@ -27,7 +27,7 @@ angular.module('mnemosyneApp')
             };
 
             $scope.triggerSearch = function(event) {
-
+                $('#loading-animation').show();
                 var searchString = angular.element(document.querySelector('.overlay-search-selector input')).val();
                 console.log("Searchstring:" + searchString);
                 //TODO: Implement random search
@@ -36,7 +36,7 @@ angular.module('mnemosyneApp')
                 var request = new MnemosyneRequest(searchString, angular.copy($scope.requestDepth), function(result) {
                     SharedResult.data = result;
                     $scope.displayResult();
-                    $scope.loadingStopped = true;
+                    $('#loading-animation').hide();
                 });
 
                 $scope.result1 = {};
@@ -46,7 +46,7 @@ angular.module('mnemosyneApp')
                 $scope.result5 = {};
 
                 request.startSearch();
-                $scope.loadingStopped = false;
+                
             };
 
             $scope.standardButtonClick = function(event) {
@@ -69,6 +69,7 @@ angular.module('mnemosyneApp')
             };
 
             $scope.searchButtonClick = function() {
+                console.log("Search klicked");
                 var searchButton = $('#button-search'),
                     overlay = $('#search-overlay');
 
@@ -342,6 +343,9 @@ angular.module('mnemosyneApp')
                      */
                     if (data === 9000) {
                         $scope.searchButtonClick({
+                            srcElement: document.querySelector('.restart')
+                        });
+                        $scope.standardButtonClick({
                             srcElement: document.querySelector('.restart')
                         });
                     }

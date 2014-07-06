@@ -15,7 +15,7 @@ angular.module('mnemosyneApp').factory('PersonNode', function () {
 
         this.professionOrOccupation = data.professionOrOccupation;
 
-        this.variantName = data.variantName;
+        this.variantName = data.variantName.slice(0,3);
 
         this.wiki = data.wiki;
 

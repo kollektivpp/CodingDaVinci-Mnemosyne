@@ -46,6 +46,7 @@
                     &.person-title {
                         text-align: left;
                         padding: 3px 0 0 0;
+                        text-overflow:ellipsis;
                     }
                     &.person-birthdate,
                     &.person-deathdate {
