@@ -1,5 +1,7 @@
 <div class="moreWiki">
     <div ng-if="outcome.wiki">
+        <h4>{{outcome.wiki.title}}</h4>
+        <p>{{outcome.wiki.html}}</p>
         <div ng-repeat="section in outcome.wiki.content">
             <h4>{{section.line}}</h4>
             <p>{{section.html}}</p>
