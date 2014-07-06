@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "duino": "0.0.9",
-    "socket.io": "0.9.16"
+    "socket.io": "^1.0.6"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

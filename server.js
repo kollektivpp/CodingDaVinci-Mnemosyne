@@ -1,4 +1,6 @@
+console.log(require('socket.io'));
 var http = require('http').createServer();
+console.log(http);
 var io = require('socket.io')(http);
 var arduino = require('duino');
 var board = new arduino.Board({
