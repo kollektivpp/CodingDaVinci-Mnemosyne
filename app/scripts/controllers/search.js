@@ -14,6 +14,8 @@ angular.module('mnemosyneApp')
             $scope.encoderValue = 0;
             $scope.lastValue = 0;
 
+            $scope.lastMore = -1;
+
             console.log("initialized searchterm");
 
             // Sharing functionality
@@ -188,8 +190,8 @@ angular.module('mnemosyneApp')
             var clickedButton = $(event.srcElement),
                 relevantMoreElement = clickedButton.parents('.nodeWrapper').children('.moreWiki'),
                 relevantNodeElement = clickedButton.closest('.nodeElement');
-
-            event.stopPropagation();
+            if (event.stopPropagation)
+                event.stopPropagation();
             $scope.hideMore();
 
             relevantMoreElement.addClass('moreIsShown');
@@ -240,6 +242,20 @@ angular.module('mnemosyneApp')
             }, 100);
         });
 
+        $scope.toggleMore = function(id) {
+            if ($scope.lastMore !== id) {
+                $scope.lastMore = id;
+                $scope.hideMore();
+                return $scope.showMore({
+                    srcElement: document.querySelectorAll('.more-button')[id - 1]
+                });
+            }
+            else {
+                $scope.lastMore = -1;
+                return $scope.hideMore();
+            }
+        }
+
         $scope.toggleSwitch = function(direction) {
             if ($('#search-overlay:visible').length !== 0) {
                 if (direction > 0) {
@@ -255,8 +271,28 @@ angular.module('mnemosyneApp')
             }
         };
 
-        if(socket.io) {
+        if(socket.on) {
             socket.on('controlstation', function(data) {
+
+                if (data === 1000) {
+                    $scope.toggleMore(1);
+                }
+
+                if (data === 2000) {
+                    $scope.toggleMore(2);
+                }
+
+                if (data === 3000) {
+                    $scope.toggleMore(3);
+                }
+
+                if (data === 4000) {
+                    $scope.toggleMore(4);
+                }
+
+                if (data === 5000) {
+                    $scope.toggleMore(5);
+                }
 
                 if (data === 6000) {
                     return $scope.standardButtonClick({
