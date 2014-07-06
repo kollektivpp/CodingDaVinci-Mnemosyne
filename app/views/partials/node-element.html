@@ -1,8 +1,5 @@
 <div class="nodeElement" ng-if="outcome.type" ng-controller="SearchCtrl">
 
-    <div ng-if="outcome.wiki === undefined"> UNDEFINED </div>
-    <div ng-if="outcome.wiki"> DEFINED </div>
-    <div>{{outcome.wiki.content[0].line}}</div>
     <button class="more-button standardButton" ng-click="showMore($event)">MORE</button>
 
      <div ng-if="outcome.type === 'PERSON'" class="flexWrapperColumn">

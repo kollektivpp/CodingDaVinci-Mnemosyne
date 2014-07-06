@@ -32,6 +32,7 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 	                	}).
 	                	catch(function(result) {
 	                		console.log(result);
+	                		deferred.reject("No Results in TOC");
 	                	});
 	                }).
 	                error(function(data, status, headers, config) {

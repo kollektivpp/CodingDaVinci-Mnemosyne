@@ -350,19 +350,20 @@ angular.module('mnemosyneApp')
                 } else if ($scope.shareActivated) {
                     var inputs = document.getElementById("share-overlay").children;
                     console.log(inputs);
-                    if (data >= -210 && data <= -150) {
-                        console.log("first focus");
-                        inputs[0].focus();
-                    } else if (data >= -149 && data <= -100) {
-                        console.log("second focus");
-                        inputs[1].focus();
-                    } else if (data >= -99 && data <= -50) {
-                        console.log("third focus");
-                        inputs[2].focus();
-                    } else if (data >= -49) {
-                        console.log("fourth focus");
-                        inputs[3].focus();
-                    }
+                    $('#share-overlay').children()[0].focus();
+                    // if (data >= -210 && data <= -150) {
+                    //     console.log("first focus");
+                    //     inputs[0].focus();
+                    // } else if (data >= -149 && data <= -100) {
+                    //     console.log("second focus");
+                    //     inputs[1].focus();
+                    // } else if (data >= -99 && data <= -50) {
+                    //     console.log("third focus");
+                    //     inputs[2].focus();
+                    // } else if (data >= -49) {
+                    //     console.log("fourth focus");
+                    //     inputs[3].focus();
+                    // }
                 }   
                 else {
 
