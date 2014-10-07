@@ -54,7 +54,6 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 	        	RequestBuilder.searchWikipedia(queries.join('%20'))
 	    	).
 	        success(function(data, status, headers, config) {
-	        	console.log("test");
 	        	console.log("pageids:" + data.query.pageids[0] + "for " + queries);
 	            if (data.query.pageids[0] != -1) {
 	                console.log("TRIGGER TOC SEARCH");
@@ -62,6 +61,9 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 	                var tocPromise = self.getToc(pageId);
 	                tocPromise.then(function(data) {
 	                	console.log("resolve deferred for toc");
+	                	deferred.resolve(data);
+	                }).catch(function(data) {
+	                	console.log("ERROR!!!!");
 	                	deferred.resolve(data);
 	                });
 	            }
@@ -82,6 +84,9 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 	                			tocPromise.then(function(data) {
 	                				console.log("resolve deferred for toc");
 	                				deferred.resolve(data);
+	                			}).catch(function(data) {
+	                				console.log("ERROR!!!!");
+	                				deferred.reject("Error loading toc");
 	                			});
 	                		}
 	                		else
@@ -91,11 +96,7 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 	        				console.log("error");
 	            			deferred.reject("Error requesting TOC inner");
 	        			});
-	            }
-	            		
-	          
-	                
-	           
+	            }   
 	        }).
 	        error(function(data, status, headers, config) {
 	        	console.log("error");
@@ -113,9 +114,9 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 			RequestBuilder.getWikipediaSection(pageId, sectionId)
 		).
 		success(function(data, status, headers, config) {
-			console.log("Data");
-			console.log(data);
+			
 			resultObject.html = data.parse.text["*"];
+			resultObject.html.replace(/<.*>.*<\/.*>/g, "");
 			deferred.resolve(resultObject);
 
 		}).
@@ -129,16 +130,11 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 	this.parseToc = function(rawData, pageId) {
 		var deferred = $q.defer();
 
-		console.log("raw");
-		console.log(rawData);
 		var promises = [];
 		var sections = rawData.parse.sections;
 		var result = { 'content' : [sections[0]] };
 		var parentObjects = [];
 		var lastObject = sections[0];
-		console.log("TOC");
-		console.log(rawData.parse.sections);
-		console.log(lastObject);
 
 		result.title = rawData.parse.title;
 
@@ -160,8 +156,6 @@ angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, Reques
 					console.log("current > last");
 			 		parentObjects[parentObjects.length] = lastObject;
 			 		lastObject.content = [current];
-			 		console.log("last object:");
-			 		console.log(lastObject);
 			 	}
 				
 				else {
