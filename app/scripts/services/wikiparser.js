@@ -1,51 +1,105 @@
 'use strict';
 
 angular.module('mnemosyneApp').service('WikiParser', function ($q, $http, RequestBuilder) {
+	
+	function normalizeQuery(query) {
+		var normalizedQuery = query.replace(/\;(.*)/g, "").replace(/[,:;.]/g, "").replace(/\([^)]*\)/g, "");
+		console.log("Normalized Query: " + normalizedQuery);
+		return normalizedQuery.split(' ');
+	}
+
+	function hasNextQuery(query, round) {
+		if (round < 2) {
+			return true;
+		}
+		return false;
+	}
+
+	this.getToc = function(pageId) {
+		var deferred = $q.defer();
+		self = this;
+		$http(
+            RequestBuilder.getWikipediaTOC(pageId)
+        ).
+        success(function(data, status, headers, config) {
+            console.log("LOADED TOC");
+            console.log(data);
+            self.parseToc(data, pageId).then(function(result) {
+            	deferred.resolve(result);
+        	}).
+        	catch(function(result) {
+        		console.log(result);
+        		deferred.reject("No Results in TOC");
+        	});
+        }).
+        error(function(data, status, headers, config) {
+            deferred.reject("Inner error loading toc");
+            EventSystem.dispatchEvent(self.finishedEvent);
+        });
+        return deferred.promise;
+	}
 
 	this.getWikiData = function(query) {
 		var deferred = $q.defer();
-
+		
 		if (query === undefined) {
 			deferred.reject("query is undefined");
 		}
 		else {
+			var queries = normalizeQuery(query);
 			self = this;
 			var pageId = -1;
 
 			$http(
-	        	RequestBuilder.searchWikipedia(query)
+	        	RequestBuilder.searchWikipedia(queries.join('%20'))
 	    	).
 	        success(function(data, status, headers, config) {
-	            
+	        	console.log("test");
+	        	console.log("pageids:" + data.query.pageids[0] + "for " + queries);
 	            if (data.query.pageids[0] != -1) {
 	                console.log("TRIGGER TOC SEARCH");
 	                pageId = data.query.pageids[0];
-
-	                $http(
-	                    RequestBuilder.getWikipediaTOC(pageId)
-	                ).
-	                success(function(data, status, headers, config) {
-	                    console.log("LOADED TOC");
-	                    console.log(data);
-	                    self.parseToc(data, pageId).then(function(result) {
-	                    	deferred.resolve(result);
-	                	}).
-	                	catch(function(result) {
-	                		console.log(result);
-	                		deferred.reject("No Results in TOC");
-	                	});
-	                }).
-	                error(function(data, status, headers, config) {
-	                    deferred.reject("Inner error loading toc");
-	                    EventSystem.dispatchEvent(self.finishedEvent);
+	                var tocPromise = self.getToc(pageId);
+	                tocPromise.then(function(data) {
+	                	console.log("resolve deferred for toc");
+	                	deferred.resolve(data);
 	                });
 	            }
 	            else {
-	                deferred.reject("No Article Found")
+	            		var buffer = queries[0];
+	            		console.log("Query length: " + queries.length);
+	            		queries[0] = queries[queries.length - 1];
+	            		queries[queries.length - 1] = buffer;
+	            		$http(
+	        				RequestBuilder.searchWikipedia(queries.join('%20'))
+	    				).
+	        			success(function(data, status, headers, config) {
+	        				console.log("inner pageids:" + data.query.pageids[0] + "for " + queries);
+	            			if (data.query.pageids[0] != -1) {
+	                			console.log("TRIGGER TOC SEARCH");
+	                			pageId = data.query.pageids[0];
+	                			var tocPromise = self.getToc(pageId);
+	                			tocPromise.then(function(data) {
+	                				console.log("resolve deferred for toc");
+	                				deferred.resolve(data);
+	                			});
+	                		}
+	                		else
+	                			deferred.reject("No Article Found")
+	                	}).
+	                	error(function(data, status, headers, config) {
+	        				console.log("error");
+	            			deferred.reject("Error requesting TOC inner");
+	        			});
 	            }
+	            		
+	          
+	                
+	           
 	        }).
 	        error(function(data, status, headers, config) {
-	            deferred.reject("Error loading TOC");
+	        	console.log("error");
+	            deferred.reject("Error requesting TOC");
 	        });
 	    }
 

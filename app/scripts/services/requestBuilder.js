@@ -21,8 +21,7 @@ angular.module('mnemosyneApp').service('RequestBuilder', function ($http) {
     };
 
     this.searchWikipedia = function(name) {
-        name = name.split(' ').join('%20');
-        console.log(name);
+        console.log("SearchWikiString: http://de.wikipedia.org/w/api.php?action=query&titles=" + name + '&indexpageids&format=json' );
         return {
             method: 'GET',
             url: 'http://de.wikipedia.org/w/api.php?action=query&titles=' + name + '&indexpageids&format=json',
@@ -44,5 +43,5 @@ angular.module('mnemosyneApp').service('RequestBuilder', function ($http) {
                  'test' : 'test'
              }
         };
-    }
+    } 
 });
