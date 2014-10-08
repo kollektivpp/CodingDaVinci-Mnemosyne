@@ -2,6 +2,12 @@
     <div id="loading-animation" style="display:none;">
         <img src="images/loading.gif" alt="Loading...">
     </div>
+    <section class="noResultSection" ng-hide="hasResults">
+        <p class="noResultDescription">
+            Leider ist diese Suche fehlgeschlagen
+        </p>
+        <img src="images/noResult.png" alt="no Result" class="noResultImage"/>
+    </section>
     <section class="nodeSection">
         <div class="nodeWrapper">
             <more-element result="result1"></more-element>

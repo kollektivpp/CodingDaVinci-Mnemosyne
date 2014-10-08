@@ -16,6 +16,7 @@ angular.module('mnemosyneApp')
 
             $scope.lastMore = -1;
             $scope.shareActivated = false;
+            $scope.hasResults = true;
 
             console.log("initialized searchterm");
 
@@ -25,6 +26,10 @@ angular.module('mnemosyneApp')
                 sendFrom: "",
                 shareAdditionalText: ""
             };
+
+            $scope.hasElements = function() {
+
+            }
 
             $scope.triggerSearch = function(event) {
                 $('#loading-animation').show();
@@ -152,15 +157,6 @@ angular.module('mnemosyneApp')
                 });
             };
 
-            $scope.displayResult = function() {
-                var requestThreadDepth = SharedResult.data[0].requestResults.length;
-
-                $scope.result1 = NodeFactory.createNodeWithOutcome(SharedResult.data[0].requestResults[requestThreadDepth - 1].outcome);
-                $scope.result2 = NodeFactory.createNodeWithOutcome(SharedResult.data[1].requestResults[requestThreadDepth - 1].outcome);
-                $scope.result3 = NodeFactory.createNodeWithOutcome(SharedResult.data[2].requestResults[requestThreadDepth - 1].outcome);
-                $scope.result4 = NodeFactory.createNodeWithOutcome(SharedResult.data[3].requestResults[requestThreadDepth - 1].outcome);
-                $scope.result5 = NodeFactory.createNodeWithOutcome(SharedResult.data[4].requestResults[requestThreadDepth - 1].outcome);
-            };
 
             $scope.$on('$viewContentLoaded', function() {
 
@@ -178,6 +174,16 @@ angular.module('mnemosyneApp')
                 }, 100);
             });
 
+        $scope.searchHasResults = function() {
+            if ($scope.result1.title || $scope.result2.title || 
+                $scope.result3.title || $scope.result4.title || $scope.result5.title) {
+
+                return true; 
+            }
+
+            return false;
+        }
+
         $scope.displayResult = function() {
             var requestThreadDepth = SharedResult.data[0].requestResults.length;
 
@@ -186,6 +192,10 @@ angular.module('mnemosyneApp')
             $scope.result3 = NodeFactory.createNodeWithOutcome(SharedResult.data[2].requestResults[requestThreadDepth - 1].outcome);
             $scope.result4 = NodeFactory.createNodeWithOutcome(SharedResult.data[3].requestResults[requestThreadDepth - 1].outcome);
             $scope.result5 = NodeFactory.createNodeWithOutcome(SharedResult.data[4].requestResults[requestThreadDepth - 1].outcome);
+
+            $scope.hasResults = $scope.searchHasResults();
+            console.log("Result: ") 
+            console.log($scope.result1);
         };
 
         $scope.showMore = function(event) {

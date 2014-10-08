@@ -72,6 +72,23 @@ textarea {
     z-index: 10000;
 }
 
+.noResultDescription {
+    float: left;
+    width: 13em;
+    font-family: "FiraMono";
+    margin: 40px 0 0 40px;
+    text-transform: uppercase;
+}
+
+.noResultImage {
+    width: 65%;
+    
+}
+
+.noResultSection {
+    height: 80%;
+}
+
 button {
     @include appearanceReset();
     font-family: "FiraMono";
