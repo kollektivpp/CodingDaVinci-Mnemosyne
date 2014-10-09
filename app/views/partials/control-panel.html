@@ -40,17 +40,17 @@
             <div id="share-overlay" class="standard-overlay overlay-left overlay-group-column hidden">
                 <div class="overlay-element">
                     <label>TO: </label>
-                    <input ng-model="share.sendTo" type="text" value="{{share}}" class="input-share">
+                    <input ng-model="share.sendTo" type="text" value="{{share}}" class="input-share" mnemosyne-focus="ShareToFocus">
                 </div>
                 <div class="overlay-element">
                     <label>FROM: </label>
-                    <input ng-model="share.sendFrom" type="text" value="{{share}}" class="input-share">
+                    <input ng-model="share.sendFrom" type="text" value="{{share}}" class="input-share" mnemosyne-focus="ShareFromFocus">
                 </div>
                 <div class="overlay-element">
                     <label>ADDITIONAL TEXT:</label><br/>
-                    <textarea ng-model="share.additionalText" name="" id="" value="{{share}}"></textarea>
+                    <textarea ng-model="share.additionalText" name="" id="" value="{{share}}" mnemosyne-focus="ShareAdditionalTextFocus"></textarea>
                 </div>
-                <button class="standard-button overlay-element" ng-click="sendMail()">SEND</button>
+                <button class="standard-button overlay-element" ng-click="sendMail()" mnemosyne-focus="ShareToSend">SEND</button>
             </div>
         </div>
 
