@@ -113,6 +113,7 @@
             &.moreIsShown {
                 display: block;
                 padding-left: 20px;
+                overflow-x: hidden;
             }
 
             h4, h5 {

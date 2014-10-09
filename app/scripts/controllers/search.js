@@ -110,6 +110,8 @@ angular.module('mnemosyneApp')
                     searchButton.addClass('active');
                     $('.searchTerm').focus();
                     searchButton.html("GO");
+                    $('.search-search-overlay').addClass('selected');
+                    $('.random-search-overlay').removeClass('selected');
                     if ($scope.shareActivated) {
                         $scope.sharePressed();
                     }
@@ -376,6 +378,9 @@ angular.module('mnemosyneApp')
 
         $scope.sharePressed = function() {
             $scope.shareActivated = !$scope.shareActivated;
+            if ($('#button-search').hasClass('active')) {
+                $scope.changeSearchOptionVisibity();
+            }
             console.log("Activated: " + $scope.shareActivated);
             $scope.standardButtonClick({
                         srcElement: document.querySelector('.share')
@@ -399,7 +404,11 @@ angular.module('mnemosyneApp')
             console.log("poti pressed");
             var searchStyleElements = angular.element(document.querySelectorAll('.overlay-search-selector'));
             var clickedElement = (angular.element(event.srcElement).hasClass('.overlay-search-selector')) ? angular.element(event.srcElement) : angular.element(event.srcElement).parent();
-            
+            if ($scope.shareActivated) {
+                alert("Result Shared");
+                return;
+            }
+
             if ($('.random-search-overlay').hasClass('selected')) {
                 $scope.potiPressedRandomSearchAction();
                 return;
@@ -407,12 +416,11 @@ angular.module('mnemosyneApp')
 
             if ($('.search-search-overlay').hasClass('selected')) {
                 $scope.triggerSearch();
-                return
+                $scope.changeSearchOptionVisibity();
+                return;
             }
 
-            if ($scope.shareActivated) {
-                alert("Result Shared");
-            }
+            
                 
         }
 
@@ -467,13 +475,19 @@ angular.module('mnemosyneApp')
         $scope.potiChangedScrollMoreAction = function(element, data) {
             console.log("recentScrollData");
             console.log($scope.scroll);
-            data = data > 50 ? 50 : data;
-            data = data < -200 ? -200 : data;
-            
-            if ($scope.recentScrollData <= data)
+            console.log($scope.recentScrollData);
+            //data = data > 50 ? 50 : data;
+            //data = data < -200 ? -200 : data;
+            console.log(data);
+            if ($scope.recentScrollData <= data) {
+                console.log("scrolldown");
                 $scope.scroll += 50;
-            if ($scope.recentScrollData >= data)
-                ($scope.scroll -= 50);
+                console.log($scope.scroll);
+            }
+            if ($scope.recentScrollData >= data) {
+                console.log("scrollup");
+                $scope.scroll -= 50;
+            }
             $('.moreIsShown.moreWiki').animate({scrollTop: $scope.scroll}, 0);
             $scope.recentScrollData = data;
         }
