@@ -19,11 +19,7 @@ angular.module('mnemosyneApp')
             $scope.scroll = 0;
             $scope.recentScrollData = 0;
 
-            //focus fields
-            $scope.ShareToFocus = false;
-            $scope.ShareFromFocus = false;
-            $scope.ShareAdditionalTextFocus = false;
-            $scope.ShareSendFocus = false;
+            $scope.selectedShareElement = null;
 
             console.log("initialized searchterm");
 
@@ -345,6 +341,24 @@ angular.module('mnemosyneApp')
         //pargma mark hardware buttons
         $scope.keyboardPressed = function(key) {
             console.log("detected key");
+            if ($scope.shareActivated) {
+                $scope.keyPressedShareElementTextChangesAction(key);
+            }
+            if ($('#button-search').hasClass('active')) {
+                $scope.keyPressedSearchTermChangedAction(key);
+            }
+        };
+
+        $scope.keyPressedShareElementTextChangesAction = function(key) {
+            console.log("share!!!");
+            var elem = angular.element($scope.selectedShareElement);
+            var currentText = angular.element($scope.selectedShareElement).val();
+            currentText += $scope.transforToGermanKey(String.fromCharCode(key));
+            angular.element($scope.selectedShareElement).val(currentText);
+            console.log(elem);
+        }
+
+        $scope.keyPressedSearchTermChangedAction = function(key) {
             var currentText = angular.element(document.querySelector('.overlay-search-selector input')).val();
             
             if (key === 127) {
@@ -354,7 +368,7 @@ angular.module('mnemosyneApp')
                 currentText += $scope.transforToGermanKey(String.fromCharCode(key));
             }
             angular.element(document.querySelector('.overlay-search-selector input')).val(currentText);
-        };
+        }
 
         $scope.enterPressed = function() {
             $scope.searchButtonClick();
@@ -394,6 +408,10 @@ angular.module('mnemosyneApp')
             if ($('.search-search-overlay').hasClass('selected')) {
                 $scope.triggerSearch();
                 return
+            }
+
+            if ($scope.shareActivated) {
+                alert("Result Shared");
             }
                 
         }
@@ -467,28 +485,20 @@ angular.module('mnemosyneApp')
         }
 
         $scope.potiChangedShareActivatedAction = function(data) {
-            var inputs = document.getElementById("share-overlay").children;
+            var inputs = $("#share-overlay").children();
             //console.log(inputs);
-            $('#share-overlay').children()[0].focus();
-             if (data >= -210 && data <= -150) {
-                 console.log("first focus");
-                 //console.log(inputs[0]);
-                 $scope.ShareToFocus = true;
-                 //inputs[0].focus();
-             } else if (data >= -149 && data <= -100) {
-                 console.log("second focus");
-                 $scope.ShareFromFocus = true;
-                 //inputs[1].focus();
-             } else if (data >= -99 && data <= -50) {
-                 console.log("third focus");
-                 $scope.ShareAdditionalTextFocus = true;
-                 inputs[2].focus();
-             } else if (data >= -49) {
-                 console.log("fourth focus");
-                 $scope.ShareSendFocus = true;
-                 inputs[3].focus();
-
+            //$('.input-share')[0].focus();
+            if (data >= -210 && data <= -150) {
+                console.log("first focus");
+                $scope.selectedShareElement = inputs[0].children[1];
+            } else if (data >= -149 && data <= -100) {
+                console.log("second focus");
+                $scope.selectedShareElement = inputs[1].children[1];
+            } else if (data >= -99 && data <= -50) {
+                console.log("third focus");
+                $scope.selectedShareElement = inputs[2].children[2];
             }
+            $scope.selectedShareElement.focus();
         }
 
         if(socket.on) {
