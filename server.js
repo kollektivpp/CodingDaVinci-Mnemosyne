@@ -8,33 +8,24 @@ var board = new arduino.Board({
     baudrate: 9600
 });
 var sockets = [];
-var value = null;
 var buttonClicked = 0;
 
 io.on('connection', function(socket) {
     'use strict';
-
+    console.log("connection");
     sockets.push(socket);
 });
 
 var dataHandler = function(data) {
     'use strict';
-
     data = parseInt(data);
 
     buttonClicked = (new Date()).getTime();
+    console.log(data,sockets.length);
 
-    if (value !== data) {
-        console.log(data,sockets.length);
-
-        sockets.forEach(function(socket) {
-            socket.emit('controlstation', data);
-        });
-
-    }
-
-    value = data;
-
+    sockets.forEach(function(socket) {
+        socket.emit('controlstation', data);
+    });
 };
 
 board.on('data', dataHandler);
