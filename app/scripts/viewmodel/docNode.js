@@ -9,7 +9,7 @@ angular.module('mnemosyneApp').factory('DocNode', function () {
         this.title = data.title;
         this.wiki = data.wiki;
 
-        if (this.wiki) {
+        if (this.wiki && this.wiki.html) {
             this.wiki.html = this.wiki.html.replace(/<[^>]*>/g, "");
             this.wiki.html = this.wiki.html.replace(/.*\[Bearbeiten\]/g, "");
             this.wiki.html = this.wiki.html.replace(/Einzelnachweisfehler.*/g, "");
