@@ -18,6 +18,7 @@ angular.module('mnemosyneApp')
             $scope.hasResults = true;
             $scope.scroll = 0;
             $scope.recentScrollData = 0;
+            $scope.metaopen = false;
 
             $scope.selectedShareElement = null;
 
@@ -388,11 +389,13 @@ angular.module('mnemosyneApp')
         }
 
         $scope.metaPressed = function() {
-            if ($('.meta-view').length === 0) {
+            if (!$scope.metaopen) {
+                $scope.metaopen = true;
                 $scope.openMetaView();
             } 
             else {
-               $location.path('/search'); 
+               $location.path('/search');
+               $scope.metaopen = false; 
             }            
         }
 

@@ -36,10 +36,6 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
                 "TYPE COULD NOT BE RESOLVED";
                 return "UNDEFINED";
         }
-        // TODO: Something like that:
-        // this.outcome.title
-        // or
-        // this.outcome.whatever.based.on.the.type.of.the.outcome
     };
 
     RequestResult.prototype.nextSearchTermForPerson = function() {
@@ -48,6 +44,7 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
         console.log(this.outcome.randomNumber);
         console.log((this.outcome.randomNumber + this.outcome.randomNumber - 12) % 3 );
 
+        //TODO: Create an enum containing the diferent casses
         switch((this.outcome.randomNumber + this.outcome.randomNumber - 12) % 3 ) {
             case 0:
                 // DATES
@@ -67,8 +64,6 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
                 if (this.outcome.professionOrOccupation) {
                     nextSearchTerm = this.outcome.professionOrOccupation[this.outcome.randomNumber % this.outcome.professionOrOccupation.length];
                 }
-
-                console.log(nextSearchTerm);
 
                 if (nextSearchTerm) {
                     break;
@@ -105,8 +100,6 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
 
             elem.facetValues.forEach(function (innerElem) {
                 facetarray.push(innerElem.value);
-                // console.log("FACETARRAY:");
-                // console.log(facetarray);
             });
         });
 
@@ -144,6 +137,7 @@ angular.module('mnemosyneApp').service('RequestResult', function ($http, ResultP
 
     RequestResult.prototype.formatSearchTerm = function(searchTerm) {
 
+            //TODO: Grouping replacement
             searchTerm = searchTerm.replace(/:/g, ' ');
             searchTerm = searchTerm.replace(/<match>/g, '');
             searchTerm = searchTerm.replace(/<\/match>/g, '');

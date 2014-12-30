@@ -2,6 +2,7 @@
 
 angular.module('mnemosyneApp').factory('PersonNode', function () {
 
+    // TODO: Refactor if hirarchy
     function PersonNode(data) {
         this.type = data.type;
 

@@ -17,8 +17,6 @@ angular.module('mnemosyneApp').service('ResultParser', function ($http, RequestB
         switch ((1000 * resultObject.randomNumber) * Math.floor(Math.random() * 100) % 3) {
             // entities (Persons)
             case 0:
-                console.log("CASE 0");
-
                 resultObject.type = "PERSON";
                 resultObject = this.parseEntityOutcome(resultObject);
 
@@ -28,7 +26,6 @@ angular.module('mnemosyneApp').service('ResultParser', function ($http, RequestB
 
             // Facets (Place)
             case 1:
-                console.log("CASE 1");
                 resultObject.type = "FACET";
                 resultObject = this.parseFacetOutcome(resultObject);
 
@@ -38,7 +35,6 @@ angular.module('mnemosyneApp').service('ResultParser', function ($http, RequestB
 
             // results[0].docs
             case 2:
-                console.log("CASE 2");
                 resultObject.type = "DOC";
                 resultObject = this.parseDocOutcome(resultObject);
                 if (resultObject.title) {
@@ -62,9 +58,6 @@ angular.module('mnemosyneApp').service('ResultParser', function ($http, RequestB
 
         var reconstructableIndex = resultObject.randomNumber % this.responseData.entities.length,
             entityData = this.responseData.entities[reconstructableIndex];
-
-        console.log("entity Data:");
-        console.log(entityData);
 
         if (entityData !== undefined) {
             resultObject.title = entityData.preferredName;

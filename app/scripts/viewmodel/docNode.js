@@ -38,11 +38,6 @@ angular.module('mnemosyneApp').factory('DocNode', function () {
                 });
             }
         }
-        
-        console.log("DOC DATA:");
-        console.log(data);
-        //var thumbnailLoader = new ThumbnailLoader();
-        //this.image = thumbnailLoader.loadThumbnail(this);
     }
 
     return DocNode;
