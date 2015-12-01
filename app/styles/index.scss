@@ -104,9 +104,9 @@ button {
 
     &.back-button {
         z-index: 1;
-        background-color: $colorMain;
-        color: $colorBlack;
-        border: $widthBorder solid $colorBlack;
+        background-color: $colorRed;
+        color: $colorBlue;
+        border: $widthBorder solid $colorRed;
         -webkit-transition: -webkit-transform 0.03s ease-out;
     }
 
@@ -115,9 +115,9 @@ button {
         top: 0px;
         left: 10px;
         z-index: 1;
-        background-color: $colorMain;
-        color: $colorBlack;
-        border: $widthBorder solid $colorBlack;
+        background-color: $colorRed;
+        color: $colorBlue;
+        border: $widthBorder solid $colorBlue;
         -webkit-transition: -webkit-transform 0.03s ease-out, opacity 0.05s linear;
         opacity: 0;
 

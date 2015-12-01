@@ -43,11 +43,11 @@
         }
 
         .overlay-element {
-            background-color: $colorMain;
-            border: $colorBlack solid $widthBorder;
+            background-color: $colorWhite;
+            border: $colorBlue solid $widthBorder;
             margin-top: 6px;
             padding: 8px;
-            color: $colorBlack;
+            color: $colorBlue;
             max-height: 300px;
 
             &.overlay-search-selector {
@@ -56,15 +56,15 @@
                 text-align: center;
 
                 &.selected {
-                    background-color: $colorBlack;
-                    border-color: $colorMain;
-                    color: $colorMain;
+                    background-color: $colorRed;
+                    border-color: $colorRed;
+                    color: $colorBlue;
 
                     input {
-                        color: $colorMain;
+                        color: $colorWhite;
                     }
 
-                    @include placeholderColor($colorMain);
+                    @include placeholderColor($colorBlue);
                 }
 
                 input {
@@ -109,9 +109,9 @@
 
         &.standard-button {
             z-index: 1;
-            background-color: $colorMain;
-            color: $colorBlack;
-            border: $widthBorder solid $colorBlack;
+            background-color: $colorRed;
+            color: $colorBlue;
+            border: $widthBorder solid $colorRed;
             -webkit-transition: -webkit-transform 0.03s ease-out;
 
             &:active {
@@ -119,9 +119,9 @@
             }
 
             &.active {
-                background-color: $colorBlack;
-                border-color: $colorMain;
-                color: $colorWhite;
+                // background-color: $colorBlack;
+                border-color: $colorBlue;
+                // color: $colorWhite;
             }
 
             &.label-left {
@@ -136,9 +136,9 @@
         }
 
         &.alternative-button {
-            background-color: $colorBlack;
-            color: $colorMain;
-            border: $widthBorder solid $colorMain;
+            background-color: $colorBlue;
+            color: $colorRed;
+            border: $widthBorder solid $colorBlue;
 
             &:active{
                 -webkit-transform: scale3d(0.96,0.96,0.96);
@@ -148,7 +148,7 @@
 
     input {
         @include appearanceReset;
-        background-color: $colorMain;
+        background-color: $colorWhite;
         color: $colorBlack;
         font-family: "FiraMono";
         font-size: 13px;
@@ -159,7 +159,7 @@
     }
 
     textarea {
-        background-color: $colorMain;
+        background-color: $colorWhite;
         width: 98%;
         font-family: "FiraMono";
         font-size: 13px;
@@ -175,7 +175,7 @@
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        background-color: $colorBlack;
+        background-color: $colorBlue;
 
         -webkit-transform: rotate(-40deg);
                 transform: rotate(-40deg);
@@ -210,11 +210,12 @@
                 width: 12px;
                 height: 12px;
                 margin: 0 4px 0 4px;
-                background-color: $colorBlack;
-                border: 2px solid $colorBlack;
+                background-color: $colorBlue;
+                border: 2px solid $colorBlue;
 
                 &.active {
-                    background-color: $colorMain;
+                    background-color: $colorRed;
+                    border: 2px solid $colorRed;
                 }
             }
         }

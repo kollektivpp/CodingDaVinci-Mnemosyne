@@ -97,8 +97,9 @@
         .moreWiki {
             width: 100%;
             height: 90%;
-            background-color: $colorMain;
-            border: 4px solid $colorBlack;
+            color: $colorWhite;
+            background-color: $colorBlue;
+            border: 4px solid $colorBlue;
             position: absolute;
             top: 20px;
             z-index: 100;
