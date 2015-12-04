@@ -19,13 +19,14 @@ angular.module('mnemosyneApp').factory('PersonNode', function () {
 
         this.wiki = data.wiki;
 
+
         if (this.wiki && this.wiki.html) {
             this.wiki.html = this.wiki.html.replace(/<[^>]*>/g, "");
             this.wiki.html = this.wiki.html.replace(/.*\[Bearbeiten\]/g, "");
             this.wiki.html = this.wiki.html.replace(/Einzelnachweisfehler.*/g, "");
             this.wiki.html = this.wiki.html.replace(/Referenzfehler.*/g, "");
             this.wiki.html = this.wiki.html.replace(/Hinweis:.*/g, "");
-            
+
             if (this.wiki.content) {
                 this.wiki.content.forEach( function(element) {
                     if (element.html) {
@@ -50,6 +51,7 @@ angular.module('mnemosyneApp').factory('PersonNode', function () {
         }
 
         this.thumbnail = data.thumbnail;
+        this.attribution = data.attribution;
     }
 
     return PersonNode;

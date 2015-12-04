@@ -2,9 +2,14 @@
     <!--<div ng-if="outcome.thumbnail !== undefined" class="flexWrapperColumn">
         <img src="{{outcome.thumbnail}}" alt="{{outcome.title}}" class="thumbnail">
     </div>-->
-
     <div class="flexWrapperColumn">
         <img ng-if="outcome.thumbnail !== undefined" src="{{outcome.thumbnail}}" alt="{{outcome.title}}" class="thumbnail" />
+        <div class="thumbnail-attribution">
+          <span>{{outcome.attribution.license}} : </span>
+          <span ng-bind-html="renderHTML(outcome.attribution.author)"></span>
+          <span ng-bind-html="renderHTML(outcome.attribution.credit)"></span>
+          <span><a href="{{outcome.attribution.commonsUrl}}">{{outcome.attribution.addon}}</a></span>
+        </div>
         <p class="person-title">{{outcome.title}}</p>
         <p ng-if="outcome.dateOfBirth !== undefined && outcome.dateOfDeath !== undefined" class="node-subtitle">({{outcome.dateOfBirth}} - {{outcome.dateOfDeath}})</p>
         <p ng-if="outcome.dateOfDeath === undefined && outcome.dateOfBirth !== undefined" class="node-subtitle">* {{outcome.dateOfDeath}}</p>
