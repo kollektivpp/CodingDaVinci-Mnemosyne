@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mnemosyneApp')
-    .controller('SearchCtrl', function($scope, $http, $compile, $location, SharedResult, MnemosyneRequest, EventSystem, NodeFactory, socket) {
+    .controller('SearchCtrl', function($scope, $http, $compile, $location, $sce, SharedResult, MnemosyneRequest, EventSystem, NodeFactory, socket) {
             $scope.awesomeThings = [
                 'HTML5 Boilerplate',
                 'AngularJS',
@@ -34,6 +34,10 @@ angular.module('mnemosyneApp')
                 shareAdditionalText: ""
             };
 
+            $scope.renderHTML = function(html_code) {
+              return $sce.trustAsHtml(html_code);
+            }
+
             $scope.hasElements = function() {
 
             }
@@ -58,7 +62,7 @@ angular.module('mnemosyneApp')
                 $scope.result5 = {};
 
                 request.startSearch();
-                
+
             };
 
             $scope.standardButtonClick = function(event) {
@@ -201,10 +205,10 @@ angular.module('mnemosyneApp')
             });
 
         $scope.searchHasResults = function() {
-            if ($scope.result1.title || $scope.result2.title || 
+            if ($scope.result1.title || $scope.result2.title ||
                 $scope.result3.title || $scope.result4.title || $scope.result5.title) {
 
-                return true; 
+                return true;
             }
 
             return false;
@@ -220,7 +224,7 @@ angular.module('mnemosyneApp')
             $scope.result5 = NodeFactory.createNodeWithOutcome(SharedResult.data[4].requestResults[requestThreadDepth - 1].outcome);
 
             $scope.hasResults = $scope.searchHasResults();
-            console.log("Result: ") 
+            console.log("Result: ")
             console.log($scope.result1);
         };
 
@@ -346,10 +350,10 @@ angular.module('mnemosyneApp')
         $scope.keyboardPressed = function(key) {
             console.log("detected key");
             var currentText = angular.element(document.querySelector('.overlay-search-selector input')).val();
-            
+
             if (key === 127) {
                 currentText = currentText.substring(0, currentText.length - 1);
-            } 
+            }
             else {
                 currentText += $scope.transforToGermanKey(String.fromCharCode(key));
             }
@@ -371,10 +375,10 @@ angular.module('mnemosyneApp')
         $scope.metaPressed = function() {
             if ($('.meta-view').length === 0) {
                 $scope.openMetaView();
-            } 
+            }
             else {
-               $location.path('/search'); 
-            }            
+               $location.path('/search');
+            }
         }
 
         $scope.restartPressed = function() {
@@ -385,7 +389,7 @@ angular.module('mnemosyneApp')
             console.log("poti pressed");
             var searchStyleElements = angular.element(document.querySelectorAll('.overlay-search-selector'));
             var clickedElement = (angular.element(event.srcElement).hasClass('.overlay-search-selector')) ? angular.element(event.srcElement) : angular.element(event.srcElement).parent();
-            
+
             if ($('.random-search-overlay').hasClass('selected')) {
                 $scope.potiPressedRandomSearchAction();
                 return;
@@ -395,7 +399,7 @@ angular.module('mnemosyneApp')
                 $scope.triggerSearch();
                 return
             }
-                
+
         }
 
         $scope.potiChanged = function(data) {
@@ -404,7 +408,7 @@ angular.module('mnemosyneApp')
             if (searchButton.hasClass('active')) {
                 $scope.potiChangedSearchAction(data);
                 return;
-            } 
+            }
             if (moreElements.length > 0) {
                 $scope.potiChangedScrollMoreAction(moreElements[0], data);
                 return;
@@ -413,9 +417,9 @@ angular.module('mnemosyneApp')
                 $scope.potiChangedShareActivatedAction(data);
                 return;
             }
-            
-            $scope.potiChangedDisplaySearchAction(data);  
-            
+
+            $scope.potiChangedDisplaySearchAction(data);
+
         }
 
         $scope.potiChangedSearchAction = function(data) {
@@ -451,7 +455,7 @@ angular.module('mnemosyneApp')
             console.log($scope.scroll);
             data = data > 50 ? 50 : data;
             data = data < -200 ? -200 : data;
-            
+
             if ($scope.recentScrollData <= data)
                 $scope.scroll += 50;
             if ($scope.recentScrollData >= data)
@@ -522,17 +526,17 @@ angular.module('mnemosyneApp')
                         $scope.metaPressed();
                         break;
                     case (data === 8000) :
-                        $scope.restartPressed(); 
-                        break;   
+                        $scope.restartPressed();
+                        break;
                     case (data === 9000) :
                         $scope.potiPressed(data);
                         break;
                     default:
                         $scope.potiChanged(data);
                         break;
-                
+
                 }
- 
+
             });
         }
 });
@@ -569,5 +573,3 @@ angular.module('mnemosyneApp')
                     // $scope.standardButtonClick({
                     //     srcElement: document.querySelector('.restart')
                     // });
-                    
-
