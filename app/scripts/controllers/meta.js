@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mnemosyneApp')
-  .controller('MetaCtrl', function ($scope, $location, SharedResult, ResultParser) {
+  .controller('MetaCtrl', function ($scope, $location, SharedResult) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
