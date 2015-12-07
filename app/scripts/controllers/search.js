@@ -264,8 +264,8 @@ angular.module('mnemosyneApp')
 
         $scope.sendMail = function() {
             var newLine = "%0A",
-                content = "Hi," + newLine + newLine + "check out these search results made with MNEMOSYNE!" + newLine,
-                mailToString = "mailto:" + $scope.share.sendTo + "?subject=" + "My Mnemosyne search" + "&body=" + content + $scope.share.additionalText + newLine + newLine + "Regards, " + $scope.share.sendFrom;
+                content = "Hi," + newLine + newLine + 'check out these search results made with "We make Known"' + newLine,
+                mailToString = "mailto:" + $scope.share.sendTo + "?subject=" + 'My "We MakeKnown" search' + "&body=" + content + $scope.share.additionalText + newLine + newLine + "Regards, " + $scope.share.sendFrom;
 
             location.href = mailToString;
         }
