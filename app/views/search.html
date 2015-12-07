@@ -2,6 +2,9 @@
     <div id="loading-animation" style="display:none;">
         <img src="images/loading02.gif" alt="Loading...">
     </div>
+    <section class="beta-hint-section" ng-hide="didSearch">
+      NOTICE: This is only an alpha release. It is therefore not optimized for mobile devices
+    </section>
     <section class="noResultSection" ng-hide="hasResults">
         <p class="noResultDescription">
             Leider ist diese Suche fehlgeschlagen
@@ -31,5 +34,5 @@
         </div>
     </section>
 
-    <div ng-include="'views/partials/control-panel.html'"></div>  
+    <div ng-include="'views/partials/control-panel.html'"></div>
 </section>

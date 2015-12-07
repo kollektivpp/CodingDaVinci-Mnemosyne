@@ -18,6 +18,7 @@ angular.module('mnemosyneApp')
             $scope.hasResults = true;
             $scope.scroll = 0;
             $scope.recentScrollData = 0;
+            $scope.didSearch = false;
 
             //focus fields
             $scope.ShareToFocus = false;
@@ -43,6 +44,7 @@ angular.module('mnemosyneApp')
             }
 
             $scope.triggerSearch = function(event) {
+                $scope.didSearch = true;
                 $('#loading-animation').show();
                 var searchString = angular.element(document.querySelector('.overlay-search-selector input')).val();
                 console.log("Searchstring:" + searchString);

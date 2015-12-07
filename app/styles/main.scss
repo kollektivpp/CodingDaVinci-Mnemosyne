@@ -6,3 +6,10 @@
 @import "control-panel";
 @import "nodeSection";
 @import "meta";
+
+.beta-hint-section {
+  color: $colorRed;
+  position: absolute;
+  left: 10%;
+  top: 10%;
+}
