@@ -64,12 +64,18 @@ angular.module('mnemosyneApp').service('RequestThread', function ($http, Request
               $http.jsonp(url)
                 .success(function(response) {
                   console.log('loaded from commons');
-                  var metadata = response.query.pages['-1'].imageinfo[0].extmetadata;
-                  attribution.credit = metadata.Credit.value;
-                  attribution.author = metadata.Artist.value;
-                  attribution.license = metadata.LicenseShortName.value;
-                  attribution.addon = 'via Wikimedia Commons';
-                  attribution.commonsUrl = 'https://commons.wikimedia.org/wiki/File:' + commonsFileName;
+                  try {
+                    var metadata = response.query.pages['-1'].imageinfo[0].extmetadata;
+                    attribution.credit = metadata.Credit.value;
+                    attribution.author = metadata.Artist.value;
+                    attribution.license = metadata.LicenseShortName.value;
+                    attribution.addon = 'via Wikimedia Commons';
+                    attribution.commonsUrl = 'https://commons.wikimedia.org/wiki/File:' + commonsFileName;
+                  }
+                  catch (err) {
+                    attribution = undefined;
+                  }
+
                 })
                 .error(function(response, status, headers, config) {
                   console.log('error from commons');
